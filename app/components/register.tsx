@@ -137,16 +137,18 @@ export function Register() {
         emailCode,
       )
       .then((result) => {
-        console.log("result", result);
+        console.log("result", !result);
+        // console.log("resul详情为：", result);
         if (!result) {
+          // console.log("我不会进来的")
           showToast(Locale.RegisterPage.Toast.Failed);
           return;
         }
-        if (result.code == 0) {
+        if (result.success) {
           showToast(Locale.RegisterPage.Toast.Success);
           navigate(Path.Chat);
         } else {
-          if (result.message) {
+          if (!result.message) {
             showToast(
               Locale.RegisterPage.Toast.FailedWithReason + result.message,
             );

@@ -6,17 +6,17 @@ import type { Response } from "./api/common";
 // console.log('BASE_URL', BASE_URL)
 
 export interface CallResult {
-  success: boolean;
+  code: number;
   message: string;
   data?: any;
 }
 export interface LoginResult {
-  success: boolean;
+  code: number;
   message: string;
   data?: any;
 }
 export interface RegisterResult {
-  success: boolean;
+  code: number;
   message: string;
   data?: any;
 }
@@ -32,10 +32,9 @@ export async function request(
   try {
     const BASE_URL = process.env.BASE_URL;
     const mode = process.env.BUILD_MODE;
-    console.log("BASE_URL", BASE_URL);
+    // console.log('BASE_URL', BASE_URL)
     // console.log('mode', mode)
     let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
-    console.log("请求url：", requestUrl);
     const res = await fetch(requestUrl, {
       method: method,
       headers: {
@@ -45,7 +44,6 @@ export async function request(
       // // @ts-ignore
       // duplex: "half",
     });
-    // console.log("res等于",res)
     if (res.status == 200) {
       let json: Response<any>;
       try {
@@ -57,11 +55,11 @@ export async function request(
           message: "json formatting failure",
         });
         return {
-          success: false,
+          code: -1,
           message: "json formatting failure",
         };
       }
-      if (!json.success) {
+      if (json.code != 0) {
         options?.onError({
           name: json.message,
           message: json.message,
@@ -75,14 +73,14 @@ export async function request(
       message: "unknown error(1)",
     });
     return {
-      success: false,
+      code: -1,
       message: "unknown error(2)",
     };
   } catch (err) {
     console.error("NetWork Error(3)", err);
     options?.onError(err as Error);
     return {
-      success: false,
+      code: -1,
       message: "NetWork Error(3)",
     };
   }
@@ -122,7 +120,7 @@ export async function requestRegister(
   },
 ): Promise<RegisterResult> {
   return request(
-    "/user/register",
+    "/user/register?turnstile=${turnstileToken}",
     "POST",
     { name, username, password, captchaId, captcha: captchaInput, email, code },
     options,

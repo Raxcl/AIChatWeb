@@ -13,6 +13,7 @@ export async function requestOpenai(req: NextRequest) {
     "/api/",
     "",
   );
+  console.log("进来了吗", openaiPath);
 
   let baseUrl = BASE_URL;
 
@@ -78,14 +79,16 @@ export async function request(req: NextRequest) {
   const authValue = req.headers.get("Authorization") ?? "";
   const uri = `${req.nextUrl.pathname}${req.nextUrl.search}`.replaceAll(
     "/api/",
-    "",
+    "api/",
   );
+  console.log("替换方法", uri);
 
   const timeoutId = setTimeout(() => {
     controller.abort();
   }, 10 * 60 * 1000);
 
   try {
+    console.log("替换方法1", uri);
     console.log(`url = ${baseUrl}/${uri}`);
     const res = await fetch(`${baseUrl}/${uri}`, {
       headers: {
@@ -118,7 +121,8 @@ export async function request(req: NextRequest) {
 }
 
 export interface Response<T> {
-  code: number;
+  // code: number;
+  success: boolean;
 
   message: string;
 
