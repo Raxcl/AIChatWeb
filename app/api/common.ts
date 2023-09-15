@@ -82,6 +82,8 @@ export async function request(req: NextRequest) {
     "api/",
   );
   console.log("替换方法", uri);
+  console.log("路径名", `${req.nextUrl.pathname}`);
+  console.log("搜索", `${req.nextUrl.search}`);
 
   const timeoutId = setTimeout(() => {
     controller.abort();

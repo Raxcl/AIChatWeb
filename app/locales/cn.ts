@@ -215,11 +215,16 @@ const cn = {
       SubTitle: "",
       Placeholder: "请再次输入密码",
     },
+    AffCode: {
+      Title: "邀请码",
+      SubTitle: "",
+      Placeholder: "输入邀请码获得额外权益",
+    },
     Actions: {
       Close: "关闭",
     },
     Toast: {
-      Success: "注册成功，正在前往聊天……",
+      Success: "注册成功，正在前往登陆页面……",
       Registering: "注册中……",
       Failed: "注册失败！",
       FailedWithReason: "注册失败！原因：",

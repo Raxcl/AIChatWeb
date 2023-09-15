@@ -46,16 +46,13 @@ export function Register() {
     );
     return uuid;
   }
-
-  const [captchaId] = useState("register-" + generateUUID());
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [emailCode, setEmailCode] = useState("");
   const [emailCodeSending, setEmailCodeSending] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [comfirmedPassword, setComfirmedPassword] = useState("");
-  const [captchaInput, setCaptchaInput] = useState("");
+  const [affCode, setAffCode] = useState("");
   function handleClickSendEmailCode() {
     if (email === null || email == "") {
       showToast(Locale.RegisterPage.Toast.EmailIsEmpty);
@@ -65,15 +62,8 @@ export function Register() {
     authStore
       .sendEmailCode(email)
       .then((resp) => {
-        if (resp.code == 0) {
+        if (resp.success) {
           showToast(Locale.RegisterPage.Toast.EmailCodeSent);
-          return;
-        }
-        if (resp.code == 10121) {
-          showToast(Locale.RegisterPage.Toast.EmailFormatError);
-          return;
-        } else if (resp.code == 10122) {
-          showToast(Locale.RegisterPage.Toast.EmailCodeSentFrequently);
           return;
         }
         showToast(resp.message);
@@ -85,6 +75,14 @@ export function Register() {
   function register() {
     if (password == null || password.length == 0) {
       showToast(Locale.RegisterPage.Toast.PasswordEmpty);
+      return;
+    }
+    if (
+      comfirmedPassword == null ||
+      comfirmedPassword.length == 0 ||
+      password != comfirmedPassword
+    ) {
+      showToast(Locale.RegisterPage.Toast.PasswordNotTheSame);
       return;
     }
     // 邮箱注册
@@ -100,13 +98,12 @@ export function Register() {
     showToast(Locale.RegisterPage.Toast.Registering);
     authStore
       .register(
-        name,
         username,
         password,
-        captchaId,
-        captchaInput,
+        comfirmedPassword,
         email,
         emailCode,
+        affCode,
       )
       .then((result) => {
         console.log("result", !result);
@@ -118,7 +115,7 @@ export function Register() {
         }
         if (result.success) {
           showToast(Locale.RegisterPage.Toast.Success);
-          navigate(Path.Chat);
+          navigate(Path.Login);
         } else {
           if (!result.message) {
             showToast(
@@ -234,6 +231,34 @@ export function Register() {
               placeholder={Locale.RegisterPage.Password.Placeholder}
               onChange={(e) => {
                 setPassword(e.currentTarget.value);
+              }}
+            />
+          </ListItem>
+
+          <ListItem
+            title={Locale.RegisterPage.ConfirmedPassword.Title}
+            subTitle={Locale.RegisterPage.ConfirmedPassword.SubTitle}
+          >
+            <PasswordInput
+              value={comfirmedPassword}
+              type="text"
+              placeholder={Locale.RegisterPage.ConfirmedPassword.Placeholder}
+              onChange={(e) => {
+                setComfirmedPassword(e.currentTarget.value);
+              }}
+            />
+          </ListItem>
+
+          <ListItem
+            title={Locale.RegisterPage.AffCode.Title}
+            subTitle={Locale.RegisterPage.AffCode.SubTitle}
+          >
+            <PasswordInput
+              value={affCode}
+              type="text"
+              placeholder={Locale.RegisterPage.AffCode.Placeholder}
+              onChange={(e) => {
+                setAffCode(e.currentTarget.value);
               }}
             />
           </ListItem>

@@ -15,18 +15,17 @@ export interface AuthStore {
   login: (username: string, password: string) => Promise<any>;
   logout: () => void;
   sendEmailCode: (email: string) => Promise<any>;
-  sendEmailCodeForResetPassword: (email: string) => Promise<any>;
   register: (
-    name: string,
     username: string,
     password: string,
-    captchaId: string,
-    captchaInput: string,
+    password2: string,
     email: string,
-    code: string,
+    verification_code: string,
+    aff_code: string,
   ) => Promise<any>;
   resetPassword: (
     password: string,
+    password2: string,
     email: string,
     code: string,
   ) => Promise<any>;
@@ -52,7 +51,7 @@ export const useAuthStore = create<AuthStore>()(
           },
         });
         console.log("result", result);
-        if (result && result.code == 0) {
+        if (result && result.success) {
           set(() => ({
             username,
             email: result.data?.userEntity?.email || "",
@@ -72,16 +71,8 @@ export const useAuthStore = create<AuthStore>()(
       removeToken() {
         set(() => ({ token: "" }));
       },
-      async sendEmailCodeForResetPassword(email) {
-        let result = await requestSendEmailCode(email, true, {
-          onError: (err) => {
-            console.error(err);
-          },
-        });
-        return result;
-      },
       async sendEmailCode(email) {
-        let result = await requestSendEmailCode(email, false, {
+        let result = await requestSendEmailCode(email, {
           onError: (err) => {
             console.error(err);
           },
@@ -89,22 +80,20 @@ export const useAuthStore = create<AuthStore>()(
         return result;
       },
       async register(
-        name,
         username,
         password,
-        captchaId,
-        captchaInput,
+        password2,
         email,
-        code,
+        verification_code,
+        aff_code,
       ) {
         let result = await requestRegister(
-          name,
           username,
           password,
-          captchaId,
-          captchaInput,
+          password2,
           email,
-          code,
+          verification_code,
+          aff_code,
           {
             onError: (err) => {
               console.error(err);
@@ -112,12 +101,10 @@ export const useAuthStore = create<AuthStore>()(
           },
         );
         console.log("result", result);
-        if (result && result.code == 0) {
+        if (result && result.success) {
           set(() => ({
-            name,
             username,
-            email: result.data?.userEntity?.email || "",
-            token: result.data?.token || "",
+            email: email,
           }));
         }
 

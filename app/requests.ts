@@ -45,7 +45,7 @@ export async function request(
       // // @ts-ignore
       // duplex: "half",
     });
-    // console.log("res等于",res)
+    console.log("res等于", res);
     if (res.status == 200) {
       let json: Response<any>;
       try {
@@ -110,13 +110,12 @@ export async function requestLogin(
 }
 
 export async function requestRegister(
-  name: string,
   username: string,
   password: string,
-  captchaId: string,
-  captchaInput: string,
+  password2: string,
   email: string,
-  code: string,
+  verification_code: string,
+  aff_code: string,
   options?: {
     onError: (error: Error, statusCode?: number) => void;
   },
@@ -124,25 +123,16 @@ export async function requestRegister(
   return request(
     "/user/register",
     "POST",
-    { name, username, password, captchaId, captcha: captchaInput, email, code },
+    { username, password, password2, email, verification_code, aff_code },
     options,
   );
 }
 
 export async function requestSendEmailCode(
   email: string,
-  resetPassword: boolean,
   options?: {
     onError: (error: Error, statusCode?: number) => void;
   },
 ): Promise<RegisterResult> {
-  return request(
-    "/sendRegisterEmailCode",
-    "POST",
-    {
-      email,
-      type: resetPassword ? "resetPassword" : "register",
-    },
-    options,
-  );
+  return request(`/verification?email=${email}`, "GET", undefined, options);
 }
