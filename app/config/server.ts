@@ -36,6 +36,7 @@ export const getServerSideConfig = () => {
       "[Server Config] you are importing a nodejs-only module outside of nodejs",
     );
   }
+  console.log("代理地址：", process.env.PROXY_URL);
 
   // console.log('process.env.OPENAI_API_KEY', process.env.OPENAI_API_KEY)
   return {

@@ -83,48 +83,45 @@ export const useWebsiteConfigStore = create<WebsiteConfigStore>()(
       defaultSystemTemplate: "",
       plugins: [] as AiPlugin[],
 
-      async fetchWebsiteConfig() {
-        const url = "/globalConfig/website";
-        const BASE_URL = process.env.BASE_URL;
-        const mode = process.env.BUILD_MODE;
-        console.log("mode", mode);
-        let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
-        return fetch(requestUrl, {
-          method: "get",
-        })
-          .then((res) => res.json())
-          .then((res: WebsiteConfigResponse) => {
-            console.log("[GlobalConfig] got website config from server", res);
-            const website = res.data.websiteContent;
-            set(() => ({
-              title: website.title,
-              mainTitle: website.mainTitle,
-              subTitle: website.subTitle,
-              loginPageSubTitle: website.loginPageSubTitle,
-              registerPageSubTitle: website.registerPageSubTitle,
-              registerTypes:
-                website.registerTypes && website.registerTypes.length
-                  ? website.registerTypes
-                  : (["OnlyUsername"] as string[]),
-              pricingPageTitle: website.pricingPageTitle,
-              pricingPageSubTitle: website.pricingPageSubTitle,
-              chatPageSubTitle: website.chatPageSubTitle,
-              sensitiveWordsTip: website.sensitiveWordsTip,
-              balanceNotEnough: website.balanceNotEnough,
-              hideGithubIcon: website.hideGithubIcon,
-              botHello: website.botHello,
-              availableModels: website.availableModels,
-              defaultSystemTemplate: website.defaultSystemTemplate,
-              plugins: website.plugins,
-            }));
-            return res;
-          })
-          .catch(() => {
-            console.error("[GlobalConfig] failed to fetch config");
-          })
-          .finally(() => {
-            // fetchState = 2;
-          });
+      fetchWebsiteConfig() {
+        const website = {
+          title: "My Title",
+          mainTitle: "My Main Title",
+          subTitle: "My Sub Title",
+          loginPageSubTitle: "My Login Page Sub Title",
+          registerPageSubTitle: "My Register Page Sub Title",
+          registerTypes: ["OnlyUsername"],
+          pricingPageTitle: "My Pricing Page Title",
+          pricingPageSubTitle: "My Pricing Page Sub Title",
+          chatPageSubTitle: "My Chat Page Sub Title",
+          sensitiveWordsTip: "My Sensitive Words Tip",
+          balanceNotEnough: "My Balance Not Enough Message",
+          hideGithubIcon: true,
+          botHello: "Hello, I'm Bot",
+          availableModels: [] as SimpleModel[],
+          defaultSystemTemplate: "My Default System Template",
+          plugins: [] as AiPlugin[],
+        };
+
+        set(() => ({
+          title: website.title,
+          mainTitle: website.mainTitle,
+          subTitle: website.subTitle,
+          loginPageSubTitle: website.loginPageSubTitle,
+          registerPageSubTitle: website.registerPageSubTitle,
+          registerTypes: website.registerTypes,
+          pricingPageTitle: website.pricingPageTitle,
+          pricingPageSubTitle: website.pricingPageSubTitle,
+          chatPageSubTitle: website.chatPageSubTitle,
+          sensitiveWordsTip: website.sensitiveWordsTip,
+          balanceNotEnough: website.balanceNotEnough,
+          hideGithubIcon: website.hideGithubIcon,
+          botHello: website.botHello,
+          availableModels: website.availableModels,
+          defaultSystemTemplate: website.defaultSystemTemplate,
+          plugins: website.plugins,
+        }));
+        return Promise.resolve(website);
       },
     }),
     {

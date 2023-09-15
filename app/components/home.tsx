@@ -85,14 +85,13 @@ const MaskPage = dynamic(async () => (await import("./mask")).MaskPage, {
   loading: () => <Loading noLogo />,
 });
 
-export interface NoticeConfig {
-  show: boolean;
-  splash: boolean;
-  title: string;
-  content: string;
-}
 export interface NoticeConfigData {
-  noticeContent: NoticeConfig;
+  show: boolean;
+  success: boolean;
+  splash: boolean;
+  message: string;
+  title: string;
+  data: string;
 }
 
 import { Response } from "../api/common";
@@ -162,6 +161,8 @@ function Screen() {
   const location = useLocation();
   const isHome = location.pathname === Path.Home;
   const isAuth = location.pathname === Path.Auth;
+  console.log("isAuth值为：", isAuth);
+  console.log("location.pathname值为：", location.pathname);
   const isMobileScreen = useMobileScreen();
 
   useEffect(() => {
@@ -185,7 +186,7 @@ function Screen() {
   const [noticeTitle, setNoticeTitle] = useState("");
   const [noticeContent, setNoticeContent] = useState("");
   useEffect(() => {
-    const url = "/globalConfig/notice";
+    const url = "/notice";
     const BASE_URL = process.env.BASE_URL;
     const mode = process.env.BUILD_MODE;
     let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
@@ -195,14 +196,10 @@ function Screen() {
       .then((res) => res.json())
       .then((res: NoticeConfigResponse) => {
         console.log("[GlobalConfig] got notice config from server", res);
-        const notice = res.data.noticeContent;
-        if (notice.show) {
-          setNoticeTitle(notice.title);
-          setNoticeContent(notice.content);
-          if (notice.splash) {
-            setNoticeShow(true);
-          }
-        }
+        const notice = res.data;
+        setNoticeTitle("我是主页标题");
+        setNoticeContent(notice.data);
+        setNoticeShow(true);
       })
       .catch(() => {
         console.error("[GlobalConfig] failed to fetch config");

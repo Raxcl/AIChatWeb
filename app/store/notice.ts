@@ -4,20 +4,21 @@ import { StoreKey } from "../constant";
 
 export interface NoticeStore {
   show: boolean;
+  success: boolean;
   splash: boolean;
+  message: string;
   title: string;
-  content: string;
+  data: string;
   fetchNoticeConfig: (token: string) => Promise<any>;
 }
 
-export interface NoticeConfig {
-  show: boolean;
-  splash: boolean;
-  title: string;
-  content: string;
-}
 export interface NoticeConfigData {
-  noticeContent: NoticeConfig;
+  show: boolean;
+  success: boolean;
+  splash: boolean;
+  message: string;
+  title: string;
+  data: string;
 }
 
 import { Response } from "../api/common";
@@ -26,13 +27,15 @@ export type NoticeConfigResponse = Response<NoticeConfigData>;
 export const useNoticeConfigStore = create<NoticeStore>()(
   persist(
     (set, get) => ({
-      show: false,
-      splash: false,
-      title: "",
-      content: "",
+      show: true,
+      success: true,
+      splash: true,
+      message: "",
+      title: "你好，我是通知页标题",
+      data: "你好，我是通知页内容",
 
       async fetchNoticeConfig(token: string) {
-        const url = "/globalConfig/notice";
+        const url = "/api/notice";
         const BASE_URL = process.env.BASE_URL;
         const mode = process.env.BUILD_MODE;
         let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
@@ -45,12 +48,11 @@ export const useNoticeConfigStore = create<NoticeStore>()(
           .then((res) => res.json())
           .then((res: NoticeConfigResponse) => {
             console.log("[GlobalConfig] got notice config from server", res);
-            const notice = res.data.noticeContent;
+            const notice = res.data;
             set(() => ({
-              show: notice.show,
-              splash: notice.splash,
-              title: notice.title,
-              content: notice.content,
+              success: notice.success,
+              message: notice.message,
+              data: notice.data,
             }));
             return res;
           })

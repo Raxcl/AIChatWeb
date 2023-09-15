@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import Image from "next/image";
 
 import styles from "./register.module.scss";
 
 import CloseIcon from "../icons/close.svg";
-import { SingleInput, Input, List, ListItem, PasswordInput } from "./ui-lib";
+import { SingleInput, List, ListItem, PasswordInput } from "./ui-lib";
 
 import { IconButton } from "./button";
-import { useAuthStore, useAccessStore, useWebsiteConfigStore } from "../store";
+import { useAuthStore, useWebsiteConfigStore } from "../store";
 
 import Locale from "../locales";
 import { Path } from "../constant";
@@ -18,16 +17,9 @@ import { showToast } from "../components/ui-lib";
 export function Register() {
   const navigate = useNavigate();
   const authStore = useAuthStore();
-  const accessStore = useAccessStore();
-  const { registerPageSubTitle, registerTypes } = useWebsiteConfigStore();
-  const registerType = registerTypes[0];
-  const REG_TYPE_ONLY_USERNAME = "OnlyUsername";
-  const REG_TYPE_USERNAME_WITH_CAPTCHA = "OnlyUsernameWithCaptcha";
-  const REG_TYPE_USERNAME_AND_EMAIL_WITH_CAPTCHA_AND_CODE =
-    "UsernameAndEmailWithCaptchaAndCode";
+  const { registerPageSubTitle } = useWebsiteConfigStore();
 
   const [loadingUsage, setLoadingUsage] = useState(false);
-  const [captcha, setCaptcha] = useState("");
 
   useEffect(() => {
     const keydownEvent = (e: KeyboardEvent) => {
@@ -95,34 +87,14 @@ export function Register() {
       showToast(Locale.RegisterPage.Toast.PasswordEmpty);
       return;
     }
-    if (
-      registerType == REG_TYPE_ONLY_USERNAME ||
-      registerType == REG_TYPE_USERNAME_WITH_CAPTCHA
-    ) {
-      if (password != comfirmedPassword) {
-        showToast(Locale.RegisterPage.Toast.PasswordNotTheSame);
-        return;
-      }
-      if (registerType == REG_TYPE_USERNAME_WITH_CAPTCHA) {
-        if (captchaInput === null || captchaInput.length === 0) {
-          showToast(Locale.RegisterPage.CaptchaIsEmpty);
-          return;
-        } else if (captchaInput.length !== 4) {
-          showToast(Locale.RegisterPage.CaptchaLengthError);
-          return;
-        }
-      }
-    } else if (
-      registerType == REG_TYPE_USERNAME_AND_EMAIL_WITH_CAPTCHA_AND_CODE
-    ) {
-      if (email === null || email == "") {
-        showToast(Locale.RegisterPage.Toast.EmailIsEmpty);
-        return;
-      }
-      if (emailCode === null || emailCode === "") {
-        showToast(Locale.RegisterPage.Toast.EmailCodeEmpty);
-        return;
-      }
+    // 邮箱注册
+    if (email === null || email == "") {
+      showToast(Locale.RegisterPage.Toast.EmailIsEmpty);
+      return;
+    }
+    if (emailCode === null || emailCode === "") {
+      showToast(Locale.RegisterPage.Toast.EmailCodeEmpty);
+      return;
     }
     setLoadingUsage(true);
     showToast(Locale.RegisterPage.Toast.Registering);
@@ -161,22 +133,6 @@ export function Register() {
         setLoadingUsage(false);
       });
   }
-  function getRegisterCaptcha(captchaId: string) {
-    // console.log('getRegisterCaptcha', captchaId)
-    fetch("/api/getRegisterCaptcha?captchaId=" + captchaId, {
-      method: "get",
-    }).then(async (resp) => {
-      const result = await resp.json();
-      if (result.code != 0) {
-        showToast(result.message);
-      } else {
-        setCaptcha("data:image/jpg;base64," + result.data);
-      }
-    });
-  }
-  useEffect(() => {
-    getRegisterCaptcha(captchaId);
-  }, [captchaId]);
 
   return (
     <ErrorBoundary>
@@ -213,52 +169,47 @@ export function Register() {
             />
           </ListItem> */}
 
-          {registerType ===
-          REG_TYPE_USERNAME_AND_EMAIL_WITH_CAPTCHA_AND_CODE ? (
-            <>
-              <ListItem
-                title={Locale.RegisterPage.Email.Title}
-                subTitle={Locale.RegisterPage.Email.SubTitle}
-              >
-                <SingleInput
-                  value={email}
-                  placeholder={Locale.RegisterPage.Email.Placeholder}
-                  onChange={(e) => {
-                    setEmail(e.currentTarget.value);
-                  }}
-                />
-              </ListItem>
+          <>
+            <ListItem
+              title={Locale.RegisterPage.Email.Title}
+              subTitle={Locale.RegisterPage.Email.SubTitle}
+            >
+              <SingleInput
+                value={email}
+                placeholder={Locale.RegisterPage.Email.Placeholder}
+                onChange={(e) => {
+                  setEmail(e.currentTarget.value);
+                }}
+              />
+            </ListItem>
 
-              <ListItem>
-                <IconButton
-                  text={
-                    emailCodeSending
-                      ? Locale.RegisterPage.Toast.EmailCodeSending
-                      : Locale.RegisterPage.Toast.SendEmailCode
-                  }
-                  disabled={emailCodeSending}
-                  onClick={() => {
-                    handleClickSendEmailCode();
-                  }}
-                />
-              </ListItem>
+            <ListItem>
+              <IconButton
+                text={
+                  emailCodeSending
+                    ? Locale.RegisterPage.Toast.EmailCodeSending
+                    : Locale.RegisterPage.Toast.SendEmailCode
+                }
+                disabled={emailCodeSending}
+                onClick={() => {
+                  handleClickSendEmailCode();
+                }}
+              />
+            </ListItem>
 
-              <ListItem
-                title={Locale.RegisterPage.EmailCode.Title}
-                subTitle={Locale.RegisterPage.EmailCode.SubTitle}
-              >
-                <SingleInput
-                  value={emailCode}
-                  placeholder={Locale.RegisterPage.EmailCode.Placeholder}
-                  onChange={(e) => {
-                    setEmailCode(e.currentTarget.value);
-                  }}
-                />
-              </ListItem>
-            </>
-          ) : (
-            <></>
-          )}
+            <ListItem
+              title={Locale.RegisterPage.EmailCode.Title}
+              subTitle={Locale.RegisterPage.EmailCode.SubTitle}
+            >
+              <SingleInput
+                value={emailCode}
+                placeholder={Locale.RegisterPage.EmailCode.Placeholder}
+                onChange={(e) => {
+                  setEmailCode(e.currentTarget.value);
+                }}
+              />
+            </ListItem>
+          </>
 
           <ListItem
             title={Locale.RegisterPage.Username.Title}
@@ -286,65 +237,6 @@ export function Register() {
               }}
             />
           </ListItem>
-
-          {registerType == REG_TYPE_ONLY_USERNAME ||
-          registerType == REG_TYPE_USERNAME_WITH_CAPTCHA ? (
-            <>
-              <ListItem
-                title={Locale.RegisterPage.ConfirmedPassword.Title}
-                subTitle={Locale.RegisterPage.ConfirmedPassword.SubTitle}
-              >
-                <PasswordInput
-                  value={comfirmedPassword}
-                  type="text"
-                  placeholder={
-                    Locale.RegisterPage.ConfirmedPassword.Placeholder
-                  }
-                  onChange={(e) => {
-                    setComfirmedPassword(e.currentTarget.value);
-                  }}
-                />
-              </ListItem>
-            </>
-          ) : (
-            <></>
-          )}
-
-          {registerType == REG_TYPE_USERNAME_WITH_CAPTCHA ? (
-            <>
-              <ListItem title={Locale.RegisterPage.Captcha}>
-                <div>
-                  {captcha ? (
-                    <img
-                      alt={Locale.RegisterPage.Captcha}
-                      src={captcha}
-                      width="100"
-                      height="40"
-                      title={Locale.RegisterPage.CaptchaTitle}
-                      style={{ cursor: "pointer" }}
-                      onClick={(e) => getRegisterCaptcha(captchaId)}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </ListItem>
-              <ListItem
-                title={Locale.RegisterPage.CaptchaInput.Title}
-                subTitle={Locale.RegisterPage.CaptchaInput.SubTitle}
-              >
-                <SingleInput
-                  value={captchaInput}
-                  placeholder={Locale.RegisterPage.CaptchaInput.Placeholder}
-                  onChange={(e) => {
-                    setCaptchaInput(e.currentTarget.value);
-                  }}
-                />
-              </ListItem>
-            </>
-          ) : (
-            <></>
-          )}
 
           <ListItem>
             <IconButton
