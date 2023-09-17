@@ -85,15 +85,15 @@ export function Register() {
       showToast(Locale.RegisterPage.Toast.PasswordNotTheSame);
       return;
     }
-    // 邮箱注册
-    if (email === null || email == "") {
-      showToast(Locale.RegisterPage.Toast.EmailIsEmpty);
-      return;
-    }
-    if (emailCode === null || emailCode === "") {
-      showToast(Locale.RegisterPage.Toast.EmailCodeEmpty);
-      return;
-    }
+    // 邮箱注册 todo 暂时取消邮箱认证
+    // if (email === null || email == "") {
+    //   showToast(Locale.RegisterPage.Toast.EmailIsEmpty);
+    //   return;
+    // }
+    // if (emailCode === null || emailCode === "") {
+    //   showToast(Locale.RegisterPage.Toast.EmailCodeEmpty);
+    //   return;
+    // }
     setLoadingUsage(true);
     showToast(Locale.RegisterPage.Toast.Registering);
     authStore
@@ -165,8 +165,8 @@ export function Register() {
               }}
             />
           </ListItem> */}
-
-          <>
+          {/* todo 暂时取消邮箱认证 */}
+          {/* <>
             <ListItem
               title={Locale.RegisterPage.Email.Title}
               subTitle={Locale.RegisterPage.Email.SubTitle}
@@ -206,7 +206,7 @@ export function Register() {
                 }}
               />
             </ListItem>
-          </>
+          </> */}
 
           <ListItem
             title={Locale.RegisterPage.Username.Title}

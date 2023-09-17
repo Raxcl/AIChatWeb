@@ -33,13 +33,10 @@ export interface ProfileData {
   id: number;
   name: string;
   username: string;
-  state: number;
+  status: number;
   role: number;
-  tokens: number;
-  chatCount: number;
-  advancedChatCount: number;
-  drawCount: number;
-  balances: Balance[];
+  access_token: number;
+  quota: number;
 }
 
 export type ProfileResponse = Response<ProfileData>;

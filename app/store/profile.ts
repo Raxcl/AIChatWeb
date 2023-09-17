@@ -28,10 +28,11 @@ export const useProfileStore = create<ProfileStore>()(
       balances: [],
 
       async fetchProfile(token: string) {
-        const url = "/users/profile";
+        const url = "/user/self";
         const BASE_URL = process.env.BASE_URL;
         const mode = process.env.BUILD_MODE;
         let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
+        console.log("个人中心测试：token等于：", token);
         return fetch(requestUrl, {
           method: "get",
           headers: {
@@ -46,11 +47,8 @@ export const useProfileStore = create<ProfileStore>()(
             if (res.data) {
               set(() => ({
                 id: data.id,
-                tokens: data.tokens,
-                chatCount: data.chatCount,
-                advanceChatCount: data.advancedChatCount,
-                drawCount: data.drawCount,
-                balances: data.balances || [],
+                tokens: data.access_token,
+                quota: data.quota,
               }));
             } else {
               console.log("[Profile] set id = 0");

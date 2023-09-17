@@ -106,7 +106,17 @@ export async function requestLogin(
     onError: (error: Error, statusCode?: number) => void;
   },
 ): Promise<LoginResult> {
-  return request("/login", "POST", { username, password }, options);
+  return request("/user/login", "POST", { username, password }, options);
+}
+
+export async function generateAccessToken(
+  // username: string,
+  // password: string,
+  options?: {
+    onError: (error: Error, statusCode?: number) => void;
+  },
+): Promise<LoginResult> {
+  return request("/user/token", "GET", undefined, options);
 }
 
 export async function requestRegister(

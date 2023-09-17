@@ -52,6 +52,8 @@ export function Profile() {
   const { fetchProfile } = profileStore;
   useEffect(() => {
     fetchProfile(authStore.token).then((res) => {
+      console.log("authStore.token的值为", authStore.token);
+      console.log("res的值为", res);
       if (!res.data || !res.data.id) {
         authStore.logout();
         navigate(Path.Login);

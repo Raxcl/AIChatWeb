@@ -52,7 +52,7 @@ export function Login() {
       .login(username, password)
       .then((result) => {
         console.log("result", result);
-        if (result && result.code == 0) {
+        if (result && result.success) {
           showToast(Locale.LoginPage.Toast.Success);
           navigate(Path.Chat);
         } else if (result && result.message) {

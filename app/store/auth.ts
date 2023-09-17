@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { StoreKey } from "../constant";
-import { requestLogin } from "../requests";
+import { requestLogin, generateAccessToken } from "../requests";
 import {
   requestRegister,
   requestSendEmailCode,
@@ -50,14 +50,24 @@ export const useAuthStore = create<AuthStore>()(
             console.error(err);
           },
         });
-        console.log("result", result);
+        // 获取token
+        let tokenResult = await generateAccessToken({
+          onError: (err) => {
+            console.error(err);
+          },
+        });
+
+        console.log("tokenResult", tokenResult);
         if (result && result.success) {
           set(() => ({
-            username,
+            username: result.data?.username || "",
             email: result.data?.userEntity?.email || "",
-            token: result.data?.token || "",
+            // 生成随机token
+            token: Math.random().toString(36),
+            // token: result.data?.access_token || "",
           }));
         }
+        console.log("token值为：", get().token);
 
         return result;
       },
