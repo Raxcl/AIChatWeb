@@ -154,6 +154,15 @@ export function Login() {
             <>
               <ListItem>
                 <IconButton
+                  text={Locale.LoginPage.Reset}
+                  type="second"
+                  onClick={() => {
+                    navigate(Path.Reset);
+                  }}
+                />
+              </ListItem>
+              <ListItem>
+                <IconButton
                   text={Locale.LoginPage.ForgetPassword}
                   type="second"
                   onClick={() => {

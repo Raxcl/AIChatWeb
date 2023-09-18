@@ -146,3 +146,11 @@ export async function requestSendEmailCode(
 ): Promise<RegisterResult> {
   return request(`/verification?email=${email}`, "GET", undefined, options);
 }
+export async function requestSendEmailWithResetPassword(
+  email: string,
+  options?: {
+    onError: (error: Error, statusCode?: number) => void;
+  },
+): Promise<RegisterResult> {
+  return request(`/reset_password?email=${email}`, "GET", undefined, options);
+}

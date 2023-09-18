@@ -180,6 +180,7 @@ const cn = {
       EmptyPassword: "密码不能为空！",
     },
     GoToRegister: "前往注册",
+    Reset: "忘记/重置密码",
     ForgetPassword: "忘记/重置密码",
   },
   RegisterPage: {
@@ -238,6 +239,7 @@ const cn = {
       EmailFormatError: "邮箱格式不正确",
       EmailCodeEmpty: "请输入邮箱验证码",
       EmailExistsError: "该邮箱已注册",
+      EmailReset: "重置邮件发送成功，请检查邮箱！",
     },
     GoToLogin: "前往登录",
     Captcha: "",
