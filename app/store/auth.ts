@@ -50,24 +50,30 @@ export const useAuthStore = create<AuthStore>()(
             console.error(err);
           },
         });
-        // 获取token
-        let tokenResult = await generateAccessToken({
-          onError: (err) => {
-            console.error(err);
-          },
-        });
 
-        console.log("tokenResult", tokenResult);
         if (result && result.success) {
-          set(() => ({
-            username: result.data?.username || "",
-            email: result.data?.userEntity?.email || "",
-            // 生成随机token
-            token: Math.random().toString(36),
-            // token: result.data?.access_token || "",
-          }));
+          // 获取token（前端校验需要）
+          let queryToken: string;
+          fetch("http://localhost:3000/api/user/token", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              queryToken = data.data;
+              console.log("queryToken数据，", queryToken);
+              console.log("token数据，", data);
+
+              set(() => ({
+                username: result.data?.username || "",
+                email: result.data?.userEntity?.email || "",
+                token: queryToken,
+              }));
+              console.log("token值为：", get().token);
+            });
         }
-        console.log("token值为：", get().token);
 
         return result;
       },
