@@ -212,7 +212,8 @@ function Screen() {
         const notice = res.data;
         setNoticeTitle("我是主页标题");
         setNoticeContent(notice.data);
-        setNoticeShow(true);
+        // todo 暂时关闭公告
+        // setNoticeShow(true);
       })
       .catch(() => {
         console.error("[GlobalConfig] failed to fetch config");
