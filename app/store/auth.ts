@@ -7,6 +7,7 @@ import {
   requestSendEmailCode,
   requestResetPassword,
   requestSendEmailWithResetPassword,
+  requestPasswordResetConfirm,
 } from "../requests";
 
 export interface AuthStore {
@@ -31,6 +32,7 @@ export interface AuthStore {
     code: string,
   ) => Promise<any>;
   sendEmailWithResetPassword: (email: string) => Promise<any>;
+  PasswordResetConfirm: (email: string, token: string) => Promise<any>;
   removeToken: () => void;
 }
 
@@ -149,6 +151,14 @@ export const useAuthStore = create<AuthStore>()(
       },
       async sendEmailWithResetPassword(email) {
         let result = await requestSendEmailWithResetPassword(email, {
+          onError: (err) => {
+            console.error(err);
+          },
+        });
+        return result;
+      },
+      async PasswordResetConfirm(email, token) {
+        let result = await requestPasswordResetConfirm(email, token, {
           onError: (err) => {
             console.error(err);
           },

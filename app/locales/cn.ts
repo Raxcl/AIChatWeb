@@ -216,6 +216,11 @@ const cn = {
       SubTitle: "",
       Placeholder: "请再次输入密码",
     },
+    NewPassword: {
+      Title: "新密码",
+      SubTitle: "",
+      Placeholder: "请输入新密码",
+    },
     AffCode: {
       Title: "邀请码",
       SubTitle: "",
@@ -254,6 +259,19 @@ const cn = {
   },
   ForgetPasswordPage: {
     Title: "重置密码",
+    SubTitle: "",
+    Toast: {
+      PasswordResetting: "重置密码中",
+      PasswordResetFailed: "重置密码失败！",
+      PasswordResetSuccess: "重置成功，正在前往聊天……",
+      PasswordResetFailedWithReason: "重置失败！原因：",
+    },
+    Actions: {
+      Close: "关闭",
+    },
+  },
+  ForgetPasswordConfirmPage: {
+    Title: "密码重置确认",
     SubTitle: "",
     Toast: {
       PasswordResetting: "重置密码中",

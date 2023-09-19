@@ -60,6 +60,12 @@ const Reset = dynamic(
     loading: () => <Loading noLogo />,
   },
 );
+const PasswordResetConfirm = dynamic(
+  async () => (await import("./PasswordResetConfirm")).PasswordResetConfirm,
+  {
+    loading: () => <Loading noLogo />,
+  },
+);
 const ForgetPassword = dynamic(
   async () => (await import("./forget-password")).ForgetPassword,
   {
@@ -251,6 +257,10 @@ function Screen() {
               <Route path={Path.Login} element={<Login />} />
               <Route path={Path.Register} element={<Register />} />
               <Route path={Path.Reset} element={<Reset />} />
+              <Route
+                path={Path.PasswordResetConfirm}
+                element={<PasswordResetConfirm />}
+              />
               <Route path={Path.ForgetPassword} element={<ForgetPassword />} />
               <Route path={Path.Profile} element={<Profile />} />
               <Route path={Path.Pricing} element={<Pricing />} />

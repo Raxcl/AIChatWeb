@@ -154,3 +154,12 @@ export async function requestSendEmailWithResetPassword(
 ): Promise<RegisterResult> {
   return request(`/reset_password?email=${email}`, "GET", undefined, options);
 }
+export async function requestPasswordResetConfirm(
+  email: string,
+  token: string,
+  options?: {
+    onError: (error: Error, statusCode?: number) => void;
+  },
+): Promise<RegisterResult> {
+  return request(`/user/reset`, "POST", { email, token }, options);
+}
