@@ -221,6 +221,11 @@ const cn = {
       SubTitle: "",
       Placeholder: "请输入新密码",
     },
+    ChangePassword: {
+      Title: "修改密码",
+      SubTitle: "",
+      Placeholder: "请输入新密码",
+    },
     AffCode: {
       Title: "邀请码",
       SubTitle: "",
@@ -255,6 +260,32 @@ const cn = {
       Title: "图形验证码",
       SubTitle: "",
       Placeholder: "请输入图中的验证码",
+    },
+  },
+  ChangePasswordPage: {
+    Title: "修改密码",
+    SubTitle: "",
+    Toast: {
+      PasswordResetting: "修改密码中",
+      PasswordResetFailed: "修改密码失败！",
+      PasswordResetSuccess: "修改成功，正在前往聊天……",
+      PasswordResetFailedWithReason: "修改失败！原因：",
+    },
+    Actions: {
+      Close: "关闭",
+    },
+  },
+  ChangePasswordConfirmPage: {
+    Title: "确认修改",
+    SubTitle: "",
+    Toast: {
+      PasswordResetting: "修改密码中",
+      PasswordResetFailed: "修改密码失败！",
+      PasswordResetSuccess: "修改成功，正在前往聊天……",
+      PasswordResetFailedWithReason: "修改失败！原因：",
+    },
+    Actions: {
+      Close: "关闭",
     },
   },
   ForgetPasswordPage: {

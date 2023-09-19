@@ -157,35 +157,6 @@ export function Profile() {
             </span>
           </ListItem>
 
-          <ListItem
-            title={Locale.Profile.ChatCount.Title}
-            subTitle={Locale.Profile.ChatCount.SubTitle}
-          >
-            <span>
-              {profileStore.chatCount == -1 ? "无限制" : profileStore.chatCount}
-            </span>
-          </ListItem>
-
-          <ListItem
-            title={Locale.Profile.AdvanceChatCount.Title}
-            subTitle={Locale.Profile.AdvanceChatCount.SubTitle}
-          >
-            <span>
-              {profileStore.advanceChatCount == -1
-                ? "无限制"
-                : profileStore.advanceChatCount}
-            </span>
-          </ListItem>
-
-          <ListItem
-            title={Locale.Profile.DrawCount.Title}
-            subTitle={Locale.Profile.DrawCount.SubTitle}
-          >
-            <span>
-              {profileStore.drawCount == -1 ? "无限制" : profileStore.drawCount}
-            </span>
-          </ListItem>
-
           {profileStore.balances && profileStore.balances.length > 0 ? (
             <ListItem
               title={Locale.Profile.ExpireList.Title}
@@ -211,6 +182,16 @@ export function Profile() {
         </List>
 
         <List>
+          <ListItem>
+            <IconButton
+              text={Locale.RegisterPage.ChangePassword.Title}
+              block={true}
+              type="primary"
+              onClick={() => {
+                navigate(Path.UserProfile);
+              }}
+            />
+          </ListItem>
           <ListItem>
             <IconButton
               text={Locale.Profile.Actions.Pricing}

@@ -37,6 +37,7 @@ export const getServerSideConfig = () => {
     );
   }
   console.log("代理地址：", process.env.PROXY_URL);
+  console.log("服务地址：", process.env.BASE_URL);
 
   // console.log('process.env.OPENAI_API_KEY', process.env.OPENAI_API_KEY)
   return {

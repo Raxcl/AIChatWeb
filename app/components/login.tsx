@@ -163,15 +163,6 @@ export function Login() {
               </ListItem>
               <ListItem>
                 <IconButton
-                  text={Locale.LoginPage.ForgetPassword}
-                  type="second"
-                  onClick={() => {
-                    navigate(Path.ForgetPassword);
-                  }}
-                />
-              </ListItem>
-              <ListItem>
-                <IconButton
                   text={Locale.LoginPage.GoToRegister}
                   type="second"
                   onClick={() => {

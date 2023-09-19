@@ -16,7 +16,9 @@ export enum Path {
   Register = "/register",
   Reset = "/reset",
   PasswordResetConfirm = "/user/reset",
+  // todo 下个版本删除
   ForgetPassword = "/forget-password",
+  ChangePassword = "/forget-password",
   Settings = "/settings",
   NewChat = "/new-chat",
   Masks = "/masks",
@@ -24,6 +26,7 @@ export enum Path {
   Profile = "/profile",
   Pricing = "/pricing",
   Balances = "/balances",
+  UserProfile = "/user/self",
 }
 
 export enum SlotID {

@@ -84,6 +84,12 @@ const Profile = dynamic(async () => (await import("./profile")).Profile, {
 const Pricing = dynamic(async () => (await import("./pricing")).Pricing, {
   loading: () => <Loading noLogo />,
 });
+const ChangePassword = dynamic(
+  async () => (await import("./changePassword")).ChangePassword,
+  {
+    loading: () => <Loading noLogo />,
+  },
+);
 
 const Chat = dynamic(async () => (await import("./chat")).Chat, {
   loading: () => <Loading noLogo />,
@@ -265,6 +271,7 @@ function Screen() {
               <Route path={Path.ForgetPassword} element={<ForgetPassword />} />
               <Route path={Path.Profile} element={<Profile />} />
               <Route path={Path.Pricing} element={<Pricing />} />
+              <Route path={Path.UserProfile} element={<ChangePassword />} />
             </Routes>
           </div>
         </>

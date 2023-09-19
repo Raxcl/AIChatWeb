@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Balance, ProfileResponse } from "../api/users/[...path]/route";
 import { StoreKey } from "../constant";
+import { Path } from "../constant";
 
 export interface ProfileStore {
   id: number;
@@ -28,7 +29,7 @@ export const useProfileStore = create<ProfileStore>()(
       balances: [],
 
       async fetchProfile(token: string) {
-        const url = "/user/self";
+        const url = Path.UserProfile;
         const BASE_URL = process.env.BASE_URL;
         const mode = process.env.BUILD_MODE;
         let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
@@ -43,11 +44,12 @@ export const useProfileStore = create<ProfileStore>()(
           .then((res) => res.json())
           .then((res: ProfileResponse) => {
             console.log("[Profile] got profile from server", res);
+            console.log("检查个人信息数据", res.data);
             const data = res.data;
             if (res.data) {
               set(() => ({
                 id: data.id,
-                tokens: data.access_token,
+                tokens: data.quota,
                 quota: data.quota,
               }));
             } else {

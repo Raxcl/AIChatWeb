@@ -8,6 +8,7 @@ import {
   requestResetPassword,
   requestSendEmailWithResetPassword,
   requestPasswordResetConfirm,
+  requestChangePassword,
 } from "../requests";
 
 export interface AuthStore {
@@ -31,6 +32,7 @@ export interface AuthStore {
     email: string,
     code: string,
   ) => Promise<any>;
+  changePassword: (username: string, password: string) => Promise<any>;
   sendEmailWithResetPassword: (email: string) => Promise<any>;
   PasswordResetConfirm: (email: string, token: string) => Promise<any>;
   removeToken: () => void;
@@ -137,7 +139,26 @@ export const useAuthStore = create<AuthStore>()(
           },
         });
         //console.log("result", result);
-        if (result && result.code == 0 && result.data) {
+        if (result && result.success && result.data) {
+          const data = result.data;
+          const user = data.userEntity;
+          set(() => ({
+            name: user.name || "",
+            username: user.username || "",
+            email: user.email || "",
+            token: data.token || "",
+          }));
+        }
+        return result;
+      },
+      async changePassword(username, password) {
+        let result = await requestChangePassword(username, password, {
+          onError: (err) => {
+            console.error(err);
+          },
+        });
+        //console.log("result", result);
+        if (result && result.success && result.data) {
           const data = result.data;
           const user = data.userEntity;
           set(() => ({
