@@ -1,9 +1,17 @@
 import { useState, useEffect } from "react";
 
-import styles from "./pricing.module.scss";
+import styles from "./profile.module.scss";
 
 import CloseIcon from "../icons/close.svg";
-import { Input, List, DangerousListItem, Modal, PasswordInput } from "./ui-lib";
+import {
+  Input,
+  List,
+  DangerousListItem,
+  Modal,
+  PasswordInput,
+  SingleInput,
+  ListItem,
+} from "./ui-lib";
 
 import { IconButton } from "./button";
 import { useAuthStore, useAccessStore, useWebsiteConfigStore } from "../store";
@@ -45,68 +53,68 @@ export function Pricing() {
   const [packages, setPackages] = useState([] as Package[]);
   const [loading, setLoading] = useState(false);
   const [isTokenValid, setTokenValid] = useState("unknown");
-  useEffect(() => {
-    setLoading(true);
-    const url = "/package/onSales";
-    const BASE_URL = process.env.BASE_URL;
-    const mode = process.env.BUILD_MODE;
-    let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
-    fetch(requestUrl, {
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + authStore.token,
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        const packagesResp = res as unknown as PackageResponse;
-        if (Math.floor(packagesResp.code / 100) === 100) {
-          setTokenValid("invalid");
-        } else {
-          setTokenValid("valid");
-        }
-        if (!packagesResp.data) {
-          setPackages([]);
-          return;
-        }
-        setPackages(
-          packagesResp.data.map((pkg) => {
-            pkg = { ...pkg };
-            if (pkg.title && !pkg.title.includes("<")) {
-              pkg.title = `<div style="font-size: 20px;">${pkg.title}</div>`;
-            }
-            if (!pkg.subTitle) {
-              const prefix = {
-                1: "总额",
-                2: "每天",
-                3: "每小时",
-                4: "每3小时",
-              }[pkg.calcTypeId];
-              pkg.subTitle =
-                `<ul style="margin-top: 5px;padding-inline-start: 10px;">` +
-                (pkg.tokens
-                  ? `<li>${prefix} <span style="font-size: 18px;">${pkg.tokens}</span> tokens</li>`
-                  : "") +
-                (pkg.chatCount
-                  ? `<li>${prefix} <span style="font-size: 18px;">${pkg.chatCount}</span> 次基础聊天（GPT3.5）</li>`
-                  : "") +
-                (pkg.advancedChatCount
-                  ? `<li>${prefix} <span style="font-size: 18px;">${pkg.advancedChatCount}</span> 次高级聊天（GPT4）</li>`
-                  : "") +
-                (pkg.drawCount
-                  ? `<li>${prefix} <span style="font-size: 18px;">${pkg.drawCount}</span> 次AI绘画</li>`
-                  : "") +
-                `<li>有效期： <span style="font-size: 18px;">${pkg.days}</span> 天</li>` +
-                `</ul>`;
-            }
-            return pkg;
-          }),
-        );
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [authStore.token]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   const url = "/package/onSales";
+  //   const BASE_URL = process.env.BASE_URL;
+  //   const mode = process.env.BUILD_MODE;
+  //   let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
+  //   fetch(requestUrl, {
+  //     method: "get",
+  //     headers: {
+  //       Authorization: "Bearer " + authStore.token,
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       const packagesResp = res as unknown as PackageResponse;
+  //       if (Math.floor(packagesResp.code / 100) === 100) {
+  //         setTokenValid("invalid");
+  //       } else {
+  //         setTokenValid("valid");
+  //       }
+  //       if (!packagesResp.data) {
+  //         setPackages([]);
+  //         return;
+  //       }
+  //       setPackages(
+  //         packagesResp.data.map((pkg) => {
+  //           pkg = { ...pkg };
+  //           if (pkg.title && !pkg.title.includes("<")) {
+  //             pkg.title = `<div style="font-size: 20px;">${pkg.title}</div>`;
+  //           }
+  //           if (!pkg.subTitle) {
+  //             const prefix = {
+  //               1: "总额",
+  //               2: "每天",
+  //               3: "每小时",
+  //               4: "每3小时",
+  //             }[pkg.calcTypeId];
+  //             pkg.subTitle =
+  //               `<ul style="margin-top: 5px;padding-inline-start: 10px;">` +
+  //               (pkg.tokens
+  //                 ? `<li>${prefix} <span style="font-size: 18px;">${pkg.tokens}</span> tokens</li>`
+  //                 : "") +
+  //               (pkg.chatCount
+  //                 ? `<li>${prefix} <span style="font-size: 18px;">${pkg.chatCount}</span> 次基础聊天（GPT3.5）</li>`
+  //                 : "") +
+  //               (pkg.advancedChatCount
+  //                 ? `<li>${prefix} <span style="font-size: 18px;">${pkg.advancedChatCount}</span> 次高级聊天（GPT4）</li>`
+  //                 : "") +
+  //               (pkg.drawCount
+  //                 ? `<li>${prefix} <span style="font-size: 18px;">${pkg.drawCount}</span> 次AI绘画</li>`
+  //                 : "") +
+  //               `<li>有效期： <span style="font-size: 18px;">${pkg.days}</span> 天</li>` +
+  //               `</ul>`;
+  //           }
+  //           return pkg;
+  //         }),
+  //       );
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // }, [authStore.token]);
 
   function handleClickBuy(pkg: Package) {
     console.log("buy pkg", pkg);
@@ -135,7 +143,7 @@ export function Pricing() {
           </div>
         </div>
       </div>
-      <div className={styles["pricing"]}>
+      <div className={styles["profile"]}>
         {loading ? (
           <div style={{ height: "100px", textAlign: "center" }}>
             {Locale.PricingPage.Loading}
@@ -155,6 +163,41 @@ export function Pricing() {
             </a>
           </div>
         )}
+        <div className={styles["profile"]}>
+          <List>
+            <ListItem>
+              <IconButton
+                text={Locale.BalancePage.Actions.GetRedeemCode}
+                block={true}
+                type="primary"
+                onClick={() => {
+                  navigate(Path.Pricing);
+                }}
+              />
+            </ListItem>
+            {/*// todo 暂停*/}
+            <ListItem>
+              <SingleInput
+                style={{ flex: 0.7 }}
+                value=""
+                placeholder={Locale.BalancePage.Placeholder}
+                onChange={(e) => {
+                  // setEmail(e.currentTarget.value);
+                }}
+              />
+              <IconButton
+                style={{ flex: 0.08 }}
+                text={Locale.BalancePage.Actions.ActionRedeem}
+                block={true}
+                type="primary"
+                onClick={() => {
+                  navigate(Path.Pricing);
+                }}
+              />
+            </ListItem>
+          </List>
+        </div>
+
         {!loading &&
         !(isTokenValid === "invalid") &&
         (!packages || packages.length === 0) ? (

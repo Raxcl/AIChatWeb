@@ -31,12 +31,12 @@ export async function request(
 ): Promise<CallResult> {
   try {
     // todo 无法读取 BASE_URL，先手动设置，后续再研究
-    const BASE_URL = "http://localhost:3000/api";
-    // const BASE_URL = process.env.BASE_URL;
-    const mode = "export";
-    // const mode = process.env.BUILD_MODE;
+    // const BASE_URL = "http://localhost:3000/api";
+    const BASE_URL = process.env.BASE_URL;
+    // const mode = "export";
+    const mode = process.env.BUILD_MODE;
     console.log("BASE_URL", BASE_URL);
-    // console.log('mode', mode)
+    console.log("url", url);
     let requestUrl = (mode === "export" ? BASE_URL : "") + "/api" + url;
     console.log("请求url：", requestUrl);
     const res = await fetch(requestUrl, {
