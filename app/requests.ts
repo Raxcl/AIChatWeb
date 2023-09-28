@@ -37,14 +37,14 @@ export async function request(
     // const mode = process.env.BUILD_MODE;
     console.log("BASE_URL", BASE_URL);
     // console.log('mode', mode)
-    let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
+    let requestUrl = (mode === "export" ? BASE_URL : "") + "/api" + url;
     console.log("请求url：", requestUrl);
     const res = await fetch(requestUrl, {
       method: method,
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(body),
+      body: body === null ? null : JSON.stringify(body),
       // // @ts-ignore
       // duplex: "half",
     });

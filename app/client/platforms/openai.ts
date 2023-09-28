@@ -24,7 +24,8 @@ export class ChatGPTApi implements LLMApi {
   path(path: string): string {
     const BASE_URL = process.env.BASE_URL;
     const mode = process.env.BUILD_MODE;
-    let baseUrl = mode === "export" ? BASE_URL ?? DEFAULT_API_HOST : "/api";
+    let baseUrl =
+      mode === "export" ? (BASE_URL ?? DEFAULT_API_HOST) + "/api" : "/api";
 
     if (baseUrl.endsWith("/")) {
       baseUrl = baseUrl.slice(0, baseUrl.length - 1);
@@ -168,7 +169,7 @@ export class ChatGPTApi implements LLMApi {
             }
             try {
               const json = JSON.parse(text);
-              const delta = json.choices[0].delta.content;
+              const delta = json.choices?.at(0)?.delta.content;
               if (delta) {
                 responseText += delta;
                 options.onUpdate?.(responseText, delta);
@@ -283,6 +284,7 @@ export class ChatGPTApi implements LLMApi {
           "DESCRIBE",
           "BLEND",
           "REROLL",
+          "ZOOMOUT",
         ].includes(action)
       ) {
         options.onFinish(Locale.Midjourney.TaskErrUnknownType);
@@ -291,11 +293,17 @@ export class ChatGPTApi implements LLMApi {
       botMessage.attr.action = action;
       let actionIndex: any = null;
       let actionUseTaskId: any = null;
+      let zoomRatio: any = null;
       if (action === "VARIATION" || action == "UPSCALE" || action == "REROLL") {
         actionIndex = parseInt(
           prompt.substring(firstSplitIndex + 2, firstSplitIndex + 3),
         );
         actionUseTaskId = prompt.substring(firstSplitIndex + 5);
+      } else if (action === "ZOOMOUT") {
+        const temp = prompt.substring(firstSplitIndex + 2);
+        const index = temp.indexOf("::");
+        zoomRatio = temp.substring(0, index);
+        actionUseTaskId = temp.substring(index + 2);
       }
       try {
         let res = null;
@@ -359,6 +367,15 @@ export class ChatGPTApi implements LLMApi {
               targetIndex: actionIndex,
               targetUuid: actionUseTaskId,
             });
+            break;
+          }
+          case "ZOOMOUT": {
+            res = await reqFn("draw/zoomOut", "POST", {
+              zoomRatio: zoomRatio,
+              targetUuid: actionUseTaskId,
+            });
+            botMessage.attr.zoomRatio = zoomRatio;
+            botMessage.attr.targetUuid = actionUseTaskId;
             break;
           }
           default:
@@ -463,6 +480,12 @@ export class ChatGPTApi implements LLMApi {
                 "::" +
                 botMessage.attr.targetUuid +
                 ")"
+              : statusResJson.data.type === "zoomOut"
+              ? "(ZOOMOUT::" +
+                botMessage.attr.zoomRatio +
+                "::" +
+                botMessage.attr.targetUuid +
+                ")"
               : ""),
           taskId,
         );
@@ -475,7 +498,6 @@ export class ChatGPTApi implements LLMApi {
             const entireContent =
               prefixContent + `[![${taskId}](${imgUrl})](${imgUrl})`;
             isFinished = true;
-            options.onFinish(entireContent);
 
             botMessage.attr.imgUrl = imgUrl;
             // if (statusResJson.action === "DESCRIBE" && statusResJson.prompt) {
@@ -483,20 +505,21 @@ export class ChatGPTApi implements LLMApi {
             // }
             botMessage.attr.status = "SUCCESS";
             botMessage.attr.finished = true;
+            options.onFinish(entireContent);
             break;
           }
           case 40:
             content =
               statusResJson.data.error || Locale.Midjourney.UnknownReason;
             isFinished = true;
+            botMessage.attr.status = "FAILURE";
+            botMessage.attr.finished = true;
             options.onFinish(
               prefixContent +
                 `**${
                   Locale.Midjourney.TaskStatus
                 }:** [${new Date().toLocaleString()}] - ${content}`,
             );
-            botMessage.attr.status = "FAILURE";
-            botMessage.attr.finished = true;
             break;
           case 0:
             content = Locale.Midjourney.TaskNotStart;
