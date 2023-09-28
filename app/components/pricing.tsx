@@ -53,6 +53,8 @@ export function Pricing() {
   const [packages, setPackages] = useState([] as Package[]);
   const [loading, setLoading] = useState(false);
   const [isTokenValid, setTokenValid] = useState("unknown");
+  const [topUpLink, setTopUpLink] = useState("");
+
   // useEffect(() => {
   //   setLoading(true);
   //   const url = "/package/onSales";
@@ -116,6 +118,29 @@ export function Pricing() {
   //     });
   // }, [authStore.token]);
 
+  interface Status {
+    top_up_link?: string;
+  }
+
+  useEffect(() => {
+    let status = localStorage.getItem("status");
+    console.log("status测试：", status);
+    if (status) {
+      const parsedStatus: Status = JSON.parse(status);
+      if (parsedStatus.top_up_link) {
+        setTopUpLink(parsedStatus.top_up_link);
+      }
+    }
+  }, []);
+
+  const openTopUpLink = () => {
+    if (!topUpLink) {
+      showToast("超级管理员未设置充值链接！");
+      return;
+    }
+    window.open(topUpLink, "_blank");
+  };
+
   function handleClickBuy(pkg: Package) {
     console.log("buy pkg", pkg);
     showToast(Locale.PricingPage.ConsultAdministrator);
@@ -170,9 +195,7 @@ export function Pricing() {
                 text={Locale.BalancePage.Actions.GetRedeemCode}
                 block={true}
                 type="primary"
-                onClick={() => {
-                  navigate(Path.Pricing);
-                }}
+                onClick={openTopUpLink}
               />
             </ListItem>
             {/*// todo 暂停*/}

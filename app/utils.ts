@@ -177,3 +177,9 @@ export function autoGrowTextArea(dom: HTMLTextAreaElement) {
 export function getCSSVar(varName: string) {
   return getComputedStyle(document.body).getPropertyValue(varName).trim();
 }
+
+export function getLogo() {
+  let logo = localStorage.getItem("logo");
+  if (!logo) return "/logo.png";
+  return logo;
+}
