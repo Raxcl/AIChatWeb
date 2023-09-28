@@ -20,6 +20,26 @@ export function Register() {
   const { registerPageSubTitle } = useWebsiteConfigStore();
 
   const [loadingUsage, setLoadingUsage] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailCode, setEmailCode] = useState("");
+  const [emailCodeSending, setEmailCodeSending] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [comfirmedPassword, setComfirmedPassword] = useState("");
+  const [affCode, setAffCode] = useState("");
+
+  // 自动获取邀请码
+  useEffect(() => {
+    const hash = window.location.hash;
+    const queryStringIndex = hash.indexOf("?");
+    if (queryStringIndex !== -1) {
+      const queryString = hash.substring(queryStringIndex + 1);
+      const affCodeParam = new URLSearchParams(queryString).get("aff");
+      if (affCodeParam) {
+        setAffCode(affCodeParam);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const keydownEvent = (e: KeyboardEvent) => {
@@ -46,13 +66,6 @@ export function Register() {
     );
     return uuid;
   }
-  const [email, setEmail] = useState("");
-  const [emailCode, setEmailCode] = useState("");
-  const [emailCodeSending, setEmailCodeSending] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [comfirmedPassword, setComfirmedPassword] = useState("");
-  const [affCode, setAffCode] = useState("");
   function handleClickSendEmailCode() {
     if (email === null || email == "") {
       showToast(Locale.RegisterPage.Toast.EmailIsEmpty);
@@ -253,7 +266,7 @@ export function Register() {
             title={Locale.RegisterPage.AffCode.Title}
             subTitle={Locale.RegisterPage.AffCode.SubTitle}
           >
-            <PasswordInput
+            <SingleInput
               value={affCode}
               type="text"
               placeholder={Locale.RegisterPage.AffCode.Placeholder}

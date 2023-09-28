@@ -221,6 +221,11 @@ const cn = {
       SubTitle: "",
       Placeholder: "请输入新密码",
     },
+    CopyInvitationLink: {
+      Title: "复制邀请链接",
+      SubTitle: "",
+      Placeholder: "输入邀请码获得额外权益",
+    },
     ChangePassword: {
       Title: "修改密码",
       SubTitle: "",

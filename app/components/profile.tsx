@@ -18,8 +18,9 @@ import Locale from "../locales";
 import { Path } from "../constant";
 import { ErrorBoundary } from "./error";
 import { useNavigate } from "react-router-dom";
-import { showToast, Popover } from "./ui-lib";
+import { showToast, Popover, SingleInput } from "./ui-lib";
 import { Avatar, AvatarPicker } from "./emoji";
+import { copyToClipboard } from "../utils";
 
 export function Profile() {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ export function Profile() {
   const updateConfig = config.update;
 
   const [loadingUsage, setLoadingUsage] = useState(false);
+  const [affLink, setAffLink] = useState("");
 
   useEffect(() => {
     const keydownEvent = (e: KeyboardEvent) => {
@@ -69,6 +71,37 @@ export function Profile() {
       navigate(Path.Login);
     }, 500);
   }
+
+  function getAffLink() {
+    const url = "/user/aff";
+    const BASE_URL = process.env.BASE_URL;
+    const mode = process.env.BUILD_MODE;
+    let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
+    fetch(requestUrl, {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + authStore.token,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const { success, message, data } = res;
+        if (success) {
+          let link = `${window.location.origin}/#/register?aff=${data}`;
+          setAffLink(link);
+          console.log("affLink", affLink);
+          copyToClipboard(link);
+        } else {
+          showToast(message);
+        }
+      });
+  }
+
+  const handleAffLinkClick = async (e: React.MouseEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    target.select();
+    copyToClipboard(target.value);
+  };
 
   return (
     <ErrorBoundary>
@@ -182,6 +215,30 @@ export function Profile() {
         </List>
 
         <List>
+          <ListItem>
+            <IconButton
+              text={Locale.RegisterPage.CopyInvitationLink.Title}
+              block={true}
+              type="primary"
+              onClick={() => {
+                getAffLink();
+              }}
+            />
+          </ListItem>
+          {affLink ? (
+            <ListItem>
+              <SingleInput
+                readOnly
+                value={affLink}
+                placeholder={Locale.LoginPage.Username.Placeholder}
+                onClick={handleAffLinkClick}
+                style={{ marginTop: "10px" }}
+              />
+            </ListItem>
+          ) : (
+            <></>
+          )}
+
           <ListItem>
             <IconButton
               text={Locale.RegisterPage.ChangePassword.Title}
