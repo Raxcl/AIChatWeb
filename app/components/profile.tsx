@@ -178,7 +178,7 @@ export function Profile() {
         </List>
 
         <List>
-          {loading ||
+          {/* {loading ||
           (profileStore.balances && profileStore.balances.length === 0) ? (
             <div
               style={{
@@ -197,10 +197,10 @@ export function Profile() {
             </div>
           ) : (
             <></>
-          )}
+          )} */}
           <ListItem
-            title={Locale.Profile.Tokens.Title}
-            subTitle={Locale.Profile.Tokens.SubTitle}
+            title={Locale.Profile.Score.Title}
+            subTitle={Locale.Profile.Score.SubTitle}
           >
             <span>
               {profileStore.tokens == -1 ? "无限制" : profileStore.tokens}
@@ -223,10 +223,10 @@ export function Profile() {
           !profileStore.balances[0].expired ? (
             <>
               <ListItem
-                title={Locale.Profile.Tokens.Title}
+                title={Locale.Profile.Score.Title}
                 subTitle={
                   getPrefix(profileStore.balances[0]) +
-                  Locale.Profile.Tokens.SubTitle
+                  Locale.Profile.Score.SubTitle
                 }
               >
                 <span>

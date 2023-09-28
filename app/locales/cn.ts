@@ -329,6 +329,10 @@ const cn = {
       Title: "tokens",
       SubTitle: "剩余tokens数量",
     },
+    Score: {
+      Title: "score",
+      SubTitle: "剩余积分",
+    },
     ChatCount: {
       Title: "询问次数",
       SubTitle: "剩余询问次数（GPT3.5等）",
@@ -391,6 +395,7 @@ const cn = {
       Refreshing: "刷新中……",
       RedeemCode: "兑换码",
       Redeem: "兑换",
+      Redeeming: "兑换中...",
       ActionRedeem: "开始兑换",
     },
   },

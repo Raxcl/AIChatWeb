@@ -21,6 +21,7 @@ import { Path } from "../constant";
 import { ErrorBoundary } from "./error";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "./ui-lib";
+// import { renderQuota } from '../helpers/render';
 
 interface Package {
   id: number;
@@ -54,6 +55,11 @@ export function Pricing() {
   const [loading, setLoading] = useState(false);
   const [isTokenValid, setTokenValid] = useState("unknown");
   const [topUpLink, setTopUpLink] = useState("");
+  const [redemptionCode, setRedemptionCode] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [userQuota, setUserQuota] = useState(0);
+  const BASE_URL = process.env.BASE_URL;
+  const mode = process.env.BUILD_MODE;
 
   // useEffect(() => {
   //   setLoading(true);
@@ -124,13 +130,13 @@ export function Pricing() {
 
   useEffect(() => {
     let status = localStorage.getItem("status");
-    console.log("status测试：", status);
     if (status) {
       const parsedStatus: Status = JSON.parse(status);
       if (parsedStatus.top_up_link) {
         setTopUpLink(parsedStatus.top_up_link);
       }
     }
+    getUserQuota().then();
   }, []);
 
   const openTopUpLink = () => {
@@ -139,6 +145,59 @@ export function Pricing() {
       return;
     }
     window.open(topUpLink, "_blank");
+  };
+
+  const topUp = async () => {
+    if (redemptionCode === "") {
+      showToast("请输入充值码！");
+      return;
+    }
+    setIsSubmitting(true);
+
+    const url = "/user/topup";
+    let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
+
+    try {
+      const res = await fetch(requestUrl, {
+        method: "post",
+        headers: {
+          Authorization: "Bearer " + authStore.token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          key: redemptionCode,
+        }),
+      }).then((res) => res.json());
+      const { success, message, data } = res;
+      if (success) {
+        showToast("充值成功！");
+        setUserQuota((quota) => {
+          return quota + data;
+        });
+        setRedemptionCode("");
+      } else {
+        showToast(message);
+      }
+    } catch (err) {
+      showToast("请求失败");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const getUserQuota = async () => {
+    // todo 无权进行此操作 暂停
+    const url = "/user/self";
+    let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
+    const res = await fetch(requestUrl, {
+      method: "get",
+    }).then((res) => res.json());
+    const { success, message, data } = res;
+    if (success) {
+      setUserQuota(data.quota);
+    } else {
+      showToast(message);
+    }
   };
 
   function handleClickBuy(pkg: Package) {
@@ -202,26 +261,44 @@ export function Pricing() {
             <ListItem>
               <SingleInput
                 style={{ flex: 0.7 }}
-                value=""
+                value={redemptionCode}
                 placeholder={Locale.BalancePage.Placeholder}
                 onChange={(e) => {
-                  // setEmail(e.currentTarget.value);
+                  setRedemptionCode(e.currentTarget.value);
                 }}
               />
               <IconButton
                 style={{ flex: 0.08 }}
-                text={Locale.BalancePage.Actions.ActionRedeem}
+                text={
+                  isSubmitting
+                    ? Locale.BalancePage.Actions.Redeeming
+                    : Locale.BalancePage.Actions.ActionRedeem
+                }
                 block={true}
                 type="primary"
-                onClick={() => {
-                  navigate(Path.Pricing);
-                }}
+                disabled={isSubmitting}
+                onClick={topUp}
               />
             </ListItem>
+
+            <DangerousListItem title={"剩余额度"}>
+              <div style={{ minWidth: "100px" }}>
+                <div
+                  style={{
+                    margin: "10px",
+                    fontSize: "30px",
+                    textAlign: "center",
+                  }}
+                >
+                  {/* {renderQuota(userQuota)} */}
+                  {userQuota}
+                </div>
+              </div>
+            </DangerousListItem>
           </List>
         </div>
 
-        {!loading &&
+        {/* {!loading &&
         !(isTokenValid === "invalid") &&
         (!packages || packages.length === 0) ? (
           <div style={{ height: "100px", textAlign: "center" }}>
@@ -258,7 +335,7 @@ export function Pricing() {
               </DangerousListItem>
             </List>
           );
-        })}
+        })} */}
       </div>
     </ErrorBoundary>
   );
