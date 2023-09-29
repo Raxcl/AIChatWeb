@@ -186,11 +186,14 @@ export function Pricing() {
   };
 
   const getUserQuota = async () => {
-    // todo 无权进行此操作 暂停
-    const url = "/user/self";
-    let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
+    const url = Path.UserProfile;
+    let requestUrl = (mode === "export" ? BASE_URL : "") + "/api" + url;
     const res = await fetch(requestUrl, {
       method: "get",
+      headers: {
+        Authorization: "Bearer " + authStore.token,
+      },
+      body: null,
     }).then((res) => res.json());
     const { success, message, data } = res;
     if (success) {
