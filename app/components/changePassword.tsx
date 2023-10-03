@@ -64,32 +64,32 @@ export function ChangePassword() {
   const [password, setPassword] = useState("");
   const [comfirmedPassword, setComfirmedPassword] = useState("");
   const [captchaInput, setCaptchaInput] = useState("");
-  function handleClickSendEmailCode() {
-    if (email === null || email == "") {
-      showToast(Locale.RegisterPage.Toast.EmailIsEmpty);
-      return;
-    }
-    setEmailCodeSending(true);
-    // authStore
-    //   .sendEmailCodeForResetPassword(email)
-    //   .then((resp) => {
-    //     if (resp.code == 0) {
-    //       showToast(Locale.RegisterPage.Toast.EmailCodeSent);
-    //       return;
-    //     }
-    //     if (resp.code == 10121) {
-    //       showToast(Locale.RegisterPage.Toast.EmailFormatError);
-    //       return;
-    //     } else if (resp.code == 10122) {
-    //       showToast(Locale.RegisterPage.Toast.EmailCodeSentFrequently);
-    //       return;
-    //     }
-    //     showToast(resp.message);
-    //   })
-    //   .finally(() => {
-    //     setEmailCodeSending(false);
-    //   });
-  }
+  // function handleClickSendEmailCode() {
+  //   if (email === null || email == "") {
+  //     showToast(Locale.RegisterPage.Toast.EmailIsEmpty);
+  //     return;
+  //   }
+  //   setEmailCodeSending(true);
+  //   authStore
+  //     .sendEmailCodeForResetPassword(email)
+  //     .then((resp) => {
+  //       if (resp.code == 0) {
+  //         showToast(Locale.RegisterPage.Toast.EmailCodeSent);
+  //         return;
+  //       }
+  //       if (resp.code == 10121) {
+  //         showToast(Locale.RegisterPage.Toast.EmailFormatError);
+  //         return;
+  //       } else if (resp.code == 10122) {
+  //         showToast(Locale.RegisterPage.Toast.EmailCodeSentFrequently);
+  //         return;
+  //       }
+  //       showToast(resp.message);
+  //     })
+  //     .finally(() => {
+  //       setEmailCodeSending(false);
+  //     });
+  // }
   function changePassword() {
     if (password == null || password.length == 0) {
       showToast(Locale.RegisterPage.Toast.PasswordEmpty);

@@ -57,10 +57,15 @@ export const useAuthStore = create<AuthStore>()(
           },
         });
 
+        const BASE_URL = process.env.BASE_URL;
+        const mode = process.env.BUILD_MODE;
+        const url = "/user/token";
+        let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
+
         if (result && result.success) {
           // 获取token（前端校验需要）
           let queryToken: string;
-          fetch("http://localhost:3000/api/user/token", {
+          fetch(requestUrl, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",

@@ -186,6 +186,7 @@ const en: LocaleType = {
       EmptyPassword: "密码不能为空！",
     },
     GoToRegister: "前往注册",
+    Reset: "忘记/重置密码",
     ForgetPassword: "忘记/重置密码",
   },
   RegisterPage: {
@@ -208,7 +209,7 @@ const en: LocaleType = {
     },
     Username: {
       Title: "用户名",
-      SubTitle: "",
+      SubTitle: "用户名只能包含字母、数字、下划线，不可以包含中文",
       Placeholder: "请输入用户名",
     },
     Password: {
@@ -221,11 +222,31 @@ const en: LocaleType = {
       SubTitle: "",
       Placeholder: "请再次输入密码",
     },
+    NewPassword: {
+      Title: "新密码",
+      SubTitle: "",
+      Placeholder: "请输入新密码",
+    },
+    CopyInvitationLink: {
+      Title: "复制邀请链接",
+      SubTitle: "",
+      Placeholder: "输入邀请码获得额外权益",
+    },
+    ChangePassword: {
+      Title: "修改密码",
+      SubTitle: "",
+      Placeholder: "请输入新密码",
+    },
+    AffCode: {
+      Title: "邀请码",
+      SubTitle: "",
+      Placeholder: "输入邀请码获得额外权益",
+    },
     Actions: {
       Close: "关闭",
     },
     Toast: {
-      Success: "注册成功，正在前往聊天……",
+      Success: "注册成功，正在前往登陆页面……",
       Registering: "注册中……",
       Failed: "注册失败！",
       FailedWithReason: "注册失败！原因：",
@@ -239,6 +260,7 @@ const en: LocaleType = {
       EmailFormatError: "邮箱格式不正确",
       EmailCodeEmpty: "请输入邮箱验证码",
       EmailExistsError: "该邮箱已注册",
+      EmailReset: "重置邮件发送成功，请检查邮箱！",
     },
     GoToLogin: "前往登录",
     Captcha: "",
@@ -272,6 +294,10 @@ const en: LocaleType = {
     Tokens: {
       Title: "tokens",
       SubTitle: "剩余tokens数量",
+    },
+    Score: {
+      Title: "score",
+      SubTitle: "剩余积分",
     },
     ChatCount: {
       Title: "询问次数",
@@ -323,14 +349,20 @@ const en: LocaleType = {
     Title: "已购套餐",
     NoBalance: "您尚未购买任何套餐",
     Loading: "请稍候……",
+    Placeholder: "请输入兑换码",
+    SubTitle: "",
     Actions: {
       Close: "关闭",
       Pricing: "购买套餐",
+      GetRedeemCode: "获取兑换码",
       Order: "订单中心",
       Profile: "个人中心",
       Refresh: "刷新",
       Refreshing: "刷新中……",
       RedeemCode: "兑换码",
+      Redeem: "兑换",
+      Redeeming: "兑换中...",
+      ActionRedeem: "开始兑换",
     },
   },
   Settings: {
@@ -351,7 +383,7 @@ const en: LocaleType = {
       },
     },
     Lang: {
-      Name: "Language", // ATTENTION: if you wanna add a new translation, please do not translate this value, leave it as `Language`
+      Name: "Language",
       All: "All Languages",
     },
     Avatar: "Avatar",
@@ -543,6 +575,45 @@ const en: LocaleType = {
     Messages: "Messages",
     Topic: "Topic",
     Time: "Time",
+  },
+  ChangePasswordPage: {
+    Title: "修改密码",
+    SubTitle: "",
+    Toast: {
+      PasswordResetting: "修改密码中",
+      PasswordResetFailed: "修改密码失败！",
+      PasswordResetSuccess: "修改成功，正在前往聊天……",
+      PasswordResetFailedWithReason: "修改失败！原因：",
+    },
+    Actions: {
+      Close: "关闭",
+    },
+  },
+  ChangePasswordConfirmPage: {
+    Title: "确认修改",
+    SubTitle: "",
+    Toast: {
+      PasswordResetting: "修改密码中",
+      PasswordResetFailed: "修改密码失败！",
+      PasswordResetSuccess: "修改成功，正在前往聊天……",
+      PasswordResetFailedWithReason: "修改失败！原因：",
+    },
+    Actions: {
+      Close: "关闭",
+    },
+  },
+  ForgetPasswordConfirmPage: {
+    Title: "密码重置确认",
+    SubTitle: "",
+    Toast: {
+      PasswordResetting: "重置密码中",
+      PasswordResetFailed: "重置密码失败！",
+      PasswordResetSuccess: "重置成功，正在前往聊天……",
+      PasswordResetFailedWithReason: "重置失败！原因：",
+    },
+    Actions: {
+      Close: "关闭",
+    },
   },
 };
 

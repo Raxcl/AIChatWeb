@@ -64,73 +64,73 @@ export function ForgetPassword() {
   const [password, setPassword] = useState("");
   const [comfirmedPassword, setComfirmedPassword] = useState("");
   const [captchaInput, setCaptchaInput] = useState("");
-  function handleClickSendEmailCode() {
-    if (email === null || email == "") {
-      showToast(Locale.RegisterPage.Toast.EmailIsEmpty);
-      return;
-    }
-    setEmailCodeSending(true);
-    authStore
-      .sendEmailCodeForResetPassword(email)
-      .then((resp) => {
-        if (resp.code == 0) {
-          showToast(Locale.RegisterPage.Toast.EmailCodeSent);
-          return;
-        }
-        if (resp.code == 10121) {
-          showToast(Locale.RegisterPage.Toast.EmailFormatError);
-          return;
-        } else if (resp.code == 10122) {
-          showToast(Locale.RegisterPage.Toast.EmailCodeSentFrequently);
-          return;
-        }
-        showToast(resp.message);
-      })
-      .finally(() => {
-        setEmailCodeSending(false);
-      });
-  }
-  function resetPassword() {
-    if (password == null || password.length == 0) {
-      showToast(Locale.RegisterPage.Toast.PasswordEmpty);
-      return;
-    }
-    if (email === null || email == "") {
-      showToast(Locale.RegisterPage.Toast.EmailIsEmpty);
-      return;
-    }
-    if (emailCode === null || emailCode === "") {
-      showToast(Locale.RegisterPage.Toast.EmailCodeEmpty);
-      return;
-    }
-    setLoadingUsage(true);
-    showToast(Locale.ForgetPasswordPage.Toast.PasswordResetting);
-    authStore
-      .resetPassword(password, email, emailCode)
-      .then((result) => {
-        console.log("result", result);
-        if (!result) {
-          showToast(Locale.ForgetPasswordPage.Toast.PasswordResetFailed);
-          return;
-        }
-        if (result.code == 0) {
-          showToast(Locale.ForgetPasswordPage.Toast.PasswordResetSuccess);
-          navigate(Path.Chat);
-        } else {
-          if (result.message) {
-            showToast(
-              Locale.ForgetPasswordPage.Toast.PasswordResetFailedWithReason +
-                result.message,
-            );
-          } else {
-            showToast(Locale.RegisterPage.Toast.Failed);
-          }
-        }
-      })
-      .finally(() => {
-        setLoadingUsage(false);
-      });
-  }
+  // function handleClickSendEmailCode() {
+  //   if (email === null || email == "") {
+  //     showToast(Locale.RegisterPage.Toast.EmailIsEmpty);
+  //     return;
+  //   }
+  //   setEmailCodeSending(true);
+  //   authStore
+  //     .sendEmailCodeForResetPassword(email)
+  //     .then((resp) => {
+  //       if (resp.code == 0) {
+  //         showToast(Locale.RegisterPage.Toast.EmailCodeSent);
+  //         return;
+  //       }
+  //       if (resp.code == 10121) {
+  //         showToast(Locale.RegisterPage.Toast.EmailFormatError);
+  //         return;
+  //       } else if (resp.code == 10122) {
+  //         showToast(Locale.RegisterPage.Toast.EmailCodeSentFrequently);
+  //         return;
+  //       }
+  //       showToast(resp.message);
+  //     })
+  //     .finally(() => {
+  //       setEmailCodeSending(false);
+  //     });
+  // }
+  // function resetPassword() {
+  //   if (password == null || password.length == 0) {
+  //     showToast(Locale.RegisterPage.Toast.PasswordEmpty);
+  //     return;
+  //   }
+  //   if (email === null || email == "") {
+  //     showToast(Locale.RegisterPage.Toast.EmailIsEmpty);
+  //     return;
+  //   }
+  //   if (emailCode === null || emailCode === "") {
+  //     showToast(Locale.RegisterPage.Toast.EmailCodeEmpty);
+  //     return;
+  //   }
+  //   setLoadingUsage(true);
+  //   showToast(Locale.ForgetPasswordPage.Toast.PasswordResetting);
+  //   authStore
+  //     .resetPassword(password, email, emailCode)
+  //     .then((result) => {
+  //       console.log("result", result);
+  //       if (!result) {
+  //         showToast(Locale.ForgetPasswordPage.Toast.PasswordResetFailed);
+  //         return;
+  //       }
+  //       if (result.code == 0) {
+  //         showToast(Locale.ForgetPasswordPage.Toast.PasswordResetSuccess);
+  //         navigate(Path.Chat);
+  //       } else {
+  //         if (result.message) {
+  //           showToast(
+  //             Locale.ForgetPasswordPage.Toast.PasswordResetFailedWithReason +
+  //               result.message,
+  //           );
+  //         } else {
+  //           showToast(Locale.RegisterPage.Toast.Failed);
+  //         }
+  //       }
+  //     })
+  //     .finally(() => {
+  //       setLoadingUsage(false);
+  //     });
+  // }
   // function getRegisterCaptcha(captchaId: string) {
   //   // console.log('getRegisterCaptcha', captchaId)
   //   fetch("/api/getRegisterCaptcha?captchaId=" + captchaId, {
@@ -194,7 +194,7 @@ export function ForgetPassword() {
               }
               disabled={emailCodeSending}
               onClick={() => {
-                handleClickSendEmailCode();
+                // handleClickSendEmailCode();
               }}
             />
           </ListItem>
@@ -233,7 +233,7 @@ export function ForgetPassword() {
               block={true}
               disabled={loadingUsage}
               onClick={() => {
-                resetPassword();
+                // resetPassword();
               }}
             />
           </ListItem>
