@@ -98,7 +98,16 @@ export const useWebsiteConfigStore = create<WebsiteConfigStore>()(
           balanceNotEnough: "My Balance Not Enough Message",
           hideGithubIcon: true,
           botHello: "Hello, I'm Bot",
-          availableModels: [] as SimpleModel[],
+          availableModels: [
+            {
+              name: "gpt-3.5-turbo",
+              contentType: "Text",
+            },
+            {
+              name: "gpt-4",
+              contentType: "Text",
+            },
+          ] as SimpleModel[],
           defaultSystemTemplate: "My Default System Template",
           plugins: [] as AiPlugin[],
         };
