@@ -191,15 +191,16 @@ const loadStatus = async () => {
     } else {
       localStorage.removeItem("chat_link");
     }
-    if (
-      data.version !== process.env.REACT_APP_VERSION &&
-      data.version !== "v0.0.0" &&
-      process.env.REACT_APP_VERSION !== ""
-    ) {
-      showToast(
-        `新版本可用：${data.version}，请使用快捷键 Shift + F5 刷新页面`,
-      );
-    }
+    // 去除新版本提示校验 为了不上传.git目录（文件太大了，几百M）
+    // if (
+    //   data.version !== process.env.REACT_APP_VERSION &&
+    //   data.version !== "v0.0.0" &&
+    //   process.env.REACT_APP_VERSION !== ""
+    // ) {
+    //   showToast(
+    //     `新版本可用：${data.version}，请使用快捷键 Shift + F5 刷新页面`,
+    //   );
+    // }
   } else {
     showToast("无法正常连接至服务器！");
   }
