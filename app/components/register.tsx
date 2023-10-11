@@ -128,10 +128,14 @@ export function Register() {
         }
         if (result.success) {
           showToast(Locale.RegisterPage.Toast.Success);
+          const BASE_URL = process.env.BASE_URL;
+          const mode = process.env.BUILD_MODE;
+          const url = "/token/";
+          let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
           // 生成 oneapi 永久令牌
           // todo 本地测试需要替换
-          fetch("http://localhost:3000/api/token/", {
-            // fetch(requestUrl, {
+          // fetch("http://localhost:3000/api/token/", {
+          fetch(requestUrl, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

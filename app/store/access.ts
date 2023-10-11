@@ -97,6 +97,10 @@ export const useAccessStore = create<AccessControlStore>()(
           });
       },
       getAccessToken() {
+        const BASE_URL = process.env.BASE_URL;
+        const mode = process.env.BUILD_MODE;
+        const url = "/token/?p=0";
+        let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
         console.log("获取访问token");
         // todo 本地测试需要替换
         // fetch("http://localhost:3000/api/token/?p=0", {
