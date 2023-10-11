@@ -128,6 +128,21 @@ export function Register() {
         }
         if (result.success) {
           showToast(Locale.RegisterPage.Toast.Success);
+          // 生成 oneapi 永久令牌
+          // todo 本地测试需要替换
+          fetch("http://localhost:3000/api/token/", {
+            // fetch(requestUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: "default",
+              remain_quota: 0,
+              expired_time: -1,
+              unlimited_quota: true,
+            }),
+          });
           navigate(Path.Login);
         } else {
           if (!result.message) {

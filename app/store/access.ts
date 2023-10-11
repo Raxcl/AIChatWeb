@@ -21,6 +21,7 @@ export interface AccessControlStore {
   enabledAccessControl: () => boolean;
   isAuthorized: () => boolean;
   fetch: () => void;
+  getAccessToken: () => void; //新增一个获取访问token的方法
 }
 
 let fetchState = 0; // 0 not fetch, 1 fetching, 2 done
@@ -93,6 +94,27 @@ export const useAccessStore = create<AccessControlStore>()(
           })
           .finally(() => {
             fetchState = 2;
+          });
+      },
+      getAccessToken() {
+        console.log("获取访问token");
+        // todo 本地测试需要替换
+        // fetch("http://localhost:3000/api/token/?p=0", {
+        fetch(requestUrl, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            let queryToken = data.data;
+            console.log("令牌token数据，", data.data);
+            queryToken = queryToken[queryToken.length - 1].key;
+            set(() => ({
+              token: queryToken,
+            }));
+            console.log("设置后的令牌token数据，", get().token);
           });
       },
     }),

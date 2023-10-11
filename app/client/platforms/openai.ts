@@ -94,6 +94,10 @@ export class ChatGPTApi implements LLMApi {
         signal: controller.signal,
         headers: getHeaders(),
       };
+      // 这里的 chatPayload 里面的 headers 里面的 token 改成 accessStore
+      const makeBearer = (token: string) => `Bearer ${token.trim()}`;
+      const accessStore = useAccessStore.getState().token;
+      chatPayload.headers.Authorization = makeBearer(accessStore);
 
       // make a fetch request
       const requestTimeoutId = setTimeout(
@@ -113,10 +117,13 @@ export class ChatGPTApi implements LLMApi {
         };
 
         controller.signal.onabort = finish;
-
+        console.log("测试点1");
+        // todo 本地测试需要替换
+        // fetchEventSource("http://localhost:3000/v1/chat/completions", {
         fetchEventSource(chatPath, {
           ...chatPayload,
           async onopen(res) {
+            console.log("测试点2", res);
             clearTimeout(requestTimeoutId);
             const contentType = res.headers.get("content-type");
             console.log(
@@ -146,6 +153,7 @@ export class ChatGPTApi implements LLMApi {
               //   console.log('extraInfo', extraInfo)
               // } catch {}
 
+              // todo 二期再做，提示信息待优化
               if (res.status === 401) {
                 responseTexts.push(Locale.Error.Unauthorized);
               }

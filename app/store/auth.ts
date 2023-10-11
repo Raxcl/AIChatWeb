@@ -63,8 +63,10 @@ export const useAuthStore = create<AuthStore>()(
         let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
 
         if (result && result.success) {
-          // 获取token（前端校验需要）
+          // 获取登录token
           let queryToken: string;
+          // todo 本地测试需要替换
+          // fetch("http://localhost:3000/api/user/token", {
           fetch(requestUrl, {
             method: "GET",
             headers: {
@@ -85,7 +87,6 @@ export const useAuthStore = create<AuthStore>()(
               console.log("token值为：", get().token);
             });
         }
-
         return result;
       },
       logout() {

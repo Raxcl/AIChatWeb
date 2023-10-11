@@ -62,6 +62,8 @@ export function Login() {
       .finally(() => {
         setLoadingUsage(false);
       });
+    //获取访问token
+    accessStore.getAccessToken();
   }
   function logout() {
     setTimeout(() => authStore.logout(), 500);
