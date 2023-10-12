@@ -86,6 +86,8 @@ export class ChatGPTApi implements LLMApi {
     options.onController?.(controller);
 
     try {
+      // todo 本地测试需要替换
+      // const chatPath = "https://oneapi.cocoai.top/v1/chat/completions";
       const chatPath = this.path(OpenaiPath.ChatPath);
       console.log("chatPath", chatPath);
       const chatPayload = {
@@ -118,8 +120,6 @@ export class ChatGPTApi implements LLMApi {
 
         controller.signal.onabort = finish;
         console.log("测试点1");
-        // todo 本地测试需要替换
-        // fetchEventSource("http://localhost:3000/v1/chat/completions", {
         fetchEventSource(chatPath, {
           ...chatPayload,
           async onopen(res) {
