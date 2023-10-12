@@ -88,7 +88,15 @@ export class ChatGPTApi implements LLMApi {
     try {
       // todo 本地测试需要替换
       // const chatPath = "https://oneapi.cocoai.top/v1/chat/completions";
-      const chatPath = this.path(OpenaiPath.ChatPath);
+      let chatPath = this.path(OpenaiPath.ChatPath);
+
+      // 本地测试需要
+      const DEV_URL = process.env.NEXT_PUBLIC_BASE_URL;
+      // 如果 DEV_URL 不为空，则使用 DEV_URL
+      if (DEV_URL) {
+        chatPath = DEV_URL + chatPath;
+      }
+
       console.log("chatPath", chatPath);
       const chatPayload = {
         method: "POST",

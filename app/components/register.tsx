@@ -133,6 +133,14 @@ export function Register() {
           const url = "/token/";
           let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
           // 生成 oneapi 永久令牌
+
+          // 本地测试需要
+          const DEV_URL = process.env.NEXT_PUBLIC_BASE_URL;
+          // 如果 DEV_URL 不为空，则使用 DEV_URL
+          if (DEV_URL) {
+            requestUrl = DEV_URL + requestUrl;
+          }
+
           // todo 本地测试需要替换
           // fetch("http://localhost:3000/api/token/", {
           fetch(requestUrl, {
