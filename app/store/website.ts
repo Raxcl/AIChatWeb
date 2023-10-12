@@ -104,9 +104,66 @@ export const useWebsiteConfigStore = create<WebsiteConfigStore>()(
               contentType: "Text",
             },
             {
-              name: "gpt-4",
+              name: "claude-2",
               contentType: "Text",
             },
+            // {
+            //   name: "gpt-3.5-turbo-instruct",
+            //   contentType: "Text",
+            // },
+            // {
+            //   name: "sage",
+            //   contentType: "Text",
+            // },
+            // {
+            //   name: "claude-instant",
+            //   contentType: "Text",
+            // },
+            // {
+            //   name: "claude-100k",
+            //   contentType: "Text",
+            // },
+
+            // {
+            //   name: "google-palm",
+            //   contentType: "Text",
+            // },
+            // {
+            //   name: "llama-2-70b",
+            //   contentType: "Text",
+            // },
+            // {
+            //   name: "llama-2-13b",
+            //   contentType: "Text",
+            // },
+            // {
+            //   name: "llama-2-7b",
+            //   contentType: "Text",
+            // },
+            // {
+            //   name: "code-llama-34b",
+            //   contentType: "Text",
+            // },
+            // {
+            //   name: "code-llama-13b",
+            //   contentType: "Text",
+            // },
+            // {
+            //   name: "code-llama-7b",
+            //   contentType: "Text",
+            // },
+            // {
+            //   name: "stable-diffusion",
+            //   contentType: "Text",
+            // },
+            // {
+            //   name: "solar-0-70b",
+            //   contentType: "Text",
+            // },
+            // {
+            //   name: "fw-mistral-7b",
+            //   contentType: "Text",
+            // },
           ] as SimpleModel[],
           defaultSystemTemplate: "My Default System Template",
           plugins: [] as AiPlugin[],
