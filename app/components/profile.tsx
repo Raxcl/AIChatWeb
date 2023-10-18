@@ -53,20 +53,20 @@ export function Profile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { fetchProfile } = profileStore;
-  useEffect(() => {
-    setLoading(true);
-    fetchProfile(authStore.token)
-      .then((res) => {
-        if (!res?.data || !res?.data?.id) {
-          authStore.logout();
-          navigate(Path.Login);
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [fetchProfile, authStore, navigate]);
+  // const { fetchProfile } = profileStore;
+  // useEffect(() => {
+  //   setLoading(true);
+  //   fetchProfile(authStore.token)
+  //     .then((res) => {
+  //       if (!res?.data || !res?.data?.id) {
+  //         authStore.logout();
+  //         navigate(Path.Login);
+  //       }
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // }, [fetchProfile, authStore, navigate]);
 
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 

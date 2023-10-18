@@ -40,6 +40,7 @@ export function Loading(props: { noLogo?: boolean }) {
           height={30}
           alt="bot"
           className="user-avatar"
+          priority
         />
       )}
       <LoadingIcon />

@@ -98,6 +98,23 @@ export const useAuthStore = create<AuthStore>()(
         return result;
       },
       logout() {
+        const BASE_URL = process.env.BASE_URL;
+        const mode = process.env.BUILD_MODE;
+        const url = "/user/logout";
+        let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
+
+        // 本地测试需要
+        const DEV_URL = process.env.NEXT_PUBLIC_BASE_URL;
+        // 如果 DEV_URL 不为空，则使用 DEV_URL
+        if (DEV_URL) {
+          requestUrl = DEV_URL + requestUrl;
+        }
+        fetch(requestUrl, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         set(() => ({
           username: "",
           email: "",

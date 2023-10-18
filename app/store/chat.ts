@@ -18,6 +18,8 @@ import { prettyObject } from "../utils/format";
 import { estimateTokenLength } from "../utils/token";
 import { AiPlugin, WebsiteConfigStore } from "./website";
 import { AuthStore } from "./auth";
+// import { useLocation, useNavigate } from "react-router-dom";
+// import { LAST_INPUT_KEY, Path, REQUEST_TIMEOUT_MS } from "../constant";
 
 export type ChatMessage = RequestMessage & {
   date: string;
@@ -327,6 +329,7 @@ export const useChatStore = create<ChatStore>()(
         const sendMessages = recentMessages.concat(userMessage);
         const sessionIndex = get().currentSessionIndex;
         const messageIndex = get().currentSession().messages.length + 1;
+        // const navigate = useNavigate();
 
         // save user's and bot's message
         get().updateCurrentSession((session) => {
@@ -397,6 +400,7 @@ export const useChatStore = create<ChatStore>()(
               botMessage.id ?? messageIndex,
             );
             if (logout) {
+              // navigate(Path.Login);
               navigateToLogin();
             }
           },

@@ -53,6 +53,8 @@ export function Login() {
       .then((result) => {
         console.log("result", result);
         if (result && result.success) {
+          //获取访问token
+          accessStore.getAccessToken();
           showToast(Locale.LoginPage.Toast.Success);
           navigate(Path.Chat);
         } else if (result && result.message) {
@@ -62,8 +64,6 @@ export function Login() {
       .finally(() => {
         setLoadingUsage(false);
       });
-    //获取访问token
-    accessStore.getAccessToken();
   }
   function logout() {
     setTimeout(() => authStore.logout(), 500);

@@ -192,7 +192,13 @@ export function SideBar(props: {
           }}
         ></div>
         <div className={styles["sidebar-logo"] + " no-dark"}>
-          <NextImage src={ChatBotIcon.src} width={44} height={44} alt="bot" />
+          <NextImage
+            src={ChatBotIcon.src}
+            width={44}
+            height={44}
+            alt="bot"
+            priority
+          />
         </div>
       </div>
 

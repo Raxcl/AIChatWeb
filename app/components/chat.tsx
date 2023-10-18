@@ -678,6 +678,13 @@ export function Chat() {
       return;
     }
     setIsLoading(true);
+    // React.useEffect(() => {
+    //   chatStore
+    //     .onUserInput(userInput, pluignModels, websiteConfigStore, authStore, () =>
+    //       navigate(Path.Login),
+    //     )
+    //     .then(() => setIsLoading(false));
+    // }, []);
     chatStore
       .onUserInput(userInput, pluignModels, websiteConfigStore, authStore, () =>
         navigate(Path.Login),
@@ -806,6 +813,13 @@ export function Chat() {
     setIsLoading(true);
     const content = session.messages[userIndex].content;
     deleteMessage(userIndex);
+    // React.useEffect(() => {
+    //   chatStore
+    //   .onUserInput(content, pluignModels, websiteConfigStore, authStore, () =>
+    //     navigate(Path.Login),
+    //   )
+    //   .then(() => setIsLoading(false));
+    // }, []);
     chatStore
       .onUserInput(content, pluignModels, websiteConfigStore, authStore, () =>
         navigate(Path.Login),
@@ -838,17 +852,47 @@ export function Chat() {
 
   // const accessStore = useAccessStore();
 
+  // React.useEffect(() => {
+  //   if (
+  //     context.length === 0 &&
+  //     session.messages.at(0)?.content !== BOT_HELLO.content
+  //   ) {
+  //     const copiedHello = Object.assign({}, BOT_HELLO);
+  //     if (!authStore.token) {
+  //       navigate(Path.Login);
+  //       copiedHello.content = Locale.Error.Unauthorized;
+  //     }
+  //     context.push(copiedHello);
+  //   }
+  // }, []);
+
   if (
     context.length === 0 &&
     session.messages.at(0)?.content !== BOT_HELLO.content
   ) {
     const copiedHello = Object.assign({}, BOT_HELLO);
     if (!authStore.token) {
+      // todo 待优化 控制台重复加载问题
       navigate(Path.Login);
       copiedHello.content = Locale.Error.Unauthorized;
     }
     context.push(copiedHello);
   }
+
+  // const authFlag = context.length === 0 &&
+  //   session.messages.at(0)?.content !== BOT_HELLO.content
+  // React.useEffect(() => {
+  //   if (
+  //     authFlag
+  //   ) {
+  //     const copiedHello = Object.assign({}, BOT_HELLO);
+  //     if (!authStore.token) {
+  //       navigate(Path.Login);
+  //       copiedHello.content = Locale.Error.Unauthorized;
+  //     }
+  //     context.push(copiedHello);
+  //   }
+  // }, []);
 
   // clear context index = context length + index in messages
   const clearContextIndex =
