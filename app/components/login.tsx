@@ -13,6 +13,7 @@ import { Path } from "../constant";
 import { ErrorBoundary } from "./error";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "../components/ui-lib";
+import { generateAccessToken } from "../requests";
 
 export function Login() {
   const navigate = useNavigate();
@@ -55,6 +56,43 @@ export function Login() {
         if (result && result.success) {
           //获取访问token
           accessStore.getAccessToken();
+          const validString = (x: string) => x && x.length > 0;
+          console.log("有效性测试：", validString(accessStore.token));
+          console.log("有效性测试：", accessStore.token);
+          console.log("有效性测试：", accessStore.token.length > 0);
+          if (!validString(accessStore.token)) {
+            // 生成访问 token
+            // putAccessToken(username, password);
+            // 生成 oneapi 永久令牌
+            const BASE_URL = process.env.BASE_URL;
+            const mode = process.env.BUILD_MODE;
+            const url = "/token/";
+            let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
+
+            // 本地测试需要
+            const DEV_URL = process.env.NEXT_PUBLIC_BASE_URL;
+            // 如果 DEV_URL 不为空，则使用 DEV_URL
+            if (DEV_URL) {
+              requestUrl = DEV_URL + requestUrl;
+            }
+
+            // todo 本地测试需要替换
+            // fetch("http://localhost:3000/api/token/", {
+            fetch(requestUrl, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                name: "default",
+                remain_quota: 0,
+                expired_time: -1,
+                unlimited_quota: true,
+              }),
+            }).then((res) => {
+              accessStore.getAccessToken();
+            });
+          }
           showToast(Locale.LoginPage.Toast.Success);
           navigate(Path.Chat);
         } else if (result && result.message) {
@@ -67,6 +105,7 @@ export function Login() {
   }
   function logout() {
     setTimeout(() => authStore.logout(), 500);
+    setTimeout(() => accessStore.updateToken(""), 500);
   }
 
   return (
@@ -179,3 +218,4 @@ export function Login() {
     </ErrorBoundary>
   );
 }
+function putAccessToken(username: string, password: string) {}

@@ -119,7 +119,7 @@ export function Register() {
         affCode,
       )
       .then((result) => {
-        console.log("result", !result);
+        -console.log("result", !result);
         // console.log("resul详情为：", result);
         if (!result) {
           // console.log("我不会进来的")
@@ -128,33 +128,6 @@ export function Register() {
         }
         if (result.success) {
           showToast(Locale.RegisterPage.Toast.Success);
-          const BASE_URL = process.env.BASE_URL;
-          const mode = process.env.BUILD_MODE;
-          const url = "/token/";
-          let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
-          // 生成 oneapi 永久令牌
-
-          // 本地测试需要
-          const DEV_URL = process.env.NEXT_PUBLIC_BASE_URL;
-          // 如果 DEV_URL 不为空，则使用 DEV_URL
-          if (DEV_URL) {
-            requestUrl = DEV_URL + requestUrl;
-          }
-
-          // todo 本地测试需要替换
-          // fetch("http://localhost:3000/api/token/", {
-          fetch(requestUrl, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              name: "default",
-              remain_quota: 0,
-              expired_time: -1,
-              unlimited_quota: true,
-            }),
-          });
           navigate(Path.Login);
         } else {
           if (!result.message) {
