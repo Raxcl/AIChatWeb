@@ -72,10 +72,9 @@ export const useAuthStore = create<AuthStore>()(
           if (DEV_URL) {
             requestUrl = DEV_URL + requestUrl;
           }
-
           // todo 本地测试需要替换
           // fetch("http://localhost:3000/api/user/token", {
-          fetch(requestUrl, {
+          await fetch(requestUrl, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -86,7 +85,6 @@ export const useAuthStore = create<AuthStore>()(
               queryToken = data.data;
               console.log("queryToken数据，", queryToken);
               console.log("token数据，", data);
-
               set(() => ({
                 username: result.data?.username || "",
                 email: result.data?.userEntity?.email || "",

@@ -561,6 +561,8 @@ export function ChatActions(props: {
 }
 
 export function Chat() {
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+
   type RenderMessage = ChatMessage & { preview?: boolean };
 
   const chatStore = useChatStore();
@@ -687,7 +689,8 @@ export function Chat() {
     // }, []);
     chatStore
       .onUserInput(userInput, pluignModels, websiteConfigStore, authStore, () =>
-        navigate(Path.Login),
+        // navigate(Path.Login),
+        setShouldNavigate(true),
       )
       .then(() => setIsLoading(false));
     localStorage.setItem(LAST_INPUT_KEY, userInput);
@@ -696,6 +699,13 @@ export function Chat() {
     if (!isMobileScreen) inputRef.current?.focus();
     setAutoScroll(true);
   };
+
+  useEffect(() => {
+    if (shouldNavigate) {
+      navigate(Path.Login);
+      setShouldNavigate(false); // 重置为false，以便下次需要导航时可以再次触发
+    }
+  }, [shouldNavigate]); // 当shouldNavigate改变时，这个副作用会重新运行
 
   const onPromptSelect = (prompt: Prompt) => {
     setTimeout(() => {
@@ -822,7 +832,8 @@ export function Chat() {
     // }, []);
     chatStore
       .onUserInput(content, pluignModels, websiteConfigStore, authStore, () =>
-        navigate(Path.Login),
+        // navigate(Path.Login),
+        setShouldNavigate(true),
       )
       .then(() => setIsLoading(false));
     inputRef.current?.focus();
@@ -866,33 +877,43 @@ export function Chat() {
   //   }
   // }, []);
 
-  if (
-    context.length === 0 &&
-    session.messages.at(0)?.content !== BOT_HELLO.content
-  ) {
-    const copiedHello = Object.assign({}, BOT_HELLO);
-    if (!authStore.token) {
-      // todo 待优化 控制台重复加载问题
-      navigate(Path.Login);
-      copiedHello.content = Locale.Error.Unauthorized;
-    }
-    context.push(copiedHello);
-  }
-
-  // const authFlag = context.length === 0 &&
+  // if (
+  //   context.length === 0 &&
   //   session.messages.at(0)?.content !== BOT_HELLO.content
-  // React.useEffect(() => {
-  //   if (
-  //     authFlag
-  //   ) {
-  //     const copiedHello = Object.assign({}, BOT_HELLO);
-  //     if (!authStore.token) {
-  //       navigate(Path.Login);
-  //       copiedHello.content = Locale.Error.Unauthorized;
-  //     }
-  //     context.push(copiedHello);
+  // ) {
+  //   const copiedHello = Object.assign({}, BOT_HELLO);
+  //   if (!authStore.token) {
+  //     // todo 待优化 控制台重复加载问题
+  //     // useEffect(() => {
+  //     //   navigate(Path.Login);
+  //     // },[]);
+  //     // navigate(Path.Login);
+  //     // setShouldNavigate(true);
+  //     copiedHello.content = Locale.Error.Unauthorized;
   //   }
-  // }, []);
+  //   context.push(copiedHello);
+  // }
+
+  useEffect(() => {
+    console.log("登录测试3.1");
+
+    if (
+      context.length === 0 &&
+      session.messages.at(0)?.content !== BOT_HELLO.content
+    ) {
+      const copiedHello = Object.assign({}, BOT_HELLO);
+      if (!authStore.token) {
+        console.log("登录测试3.2", authStore.token);
+        console.log("登录测试3.2", authStore.token);
+        console.log("登录测试3.2", authStore.token);
+        console.log("登录测试3.2", authStore.token);
+
+        navigate(Path.Login);
+        copiedHello.content = Locale.Error.Unauthorized;
+      }
+      context.push(copiedHello);
+    }
+  }, [context, session.messages, authStore.token]); // 你可以根据实际情况确定依赖项
 
   // clear context index = context length + index in messages
   const clearContextIndex =

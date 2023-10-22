@@ -53,13 +53,12 @@ export function Login() {
       .login(username, password)
       .then((result) => {
         console.log("result", result);
+        console.log("访问token测试", accessStore.token);
         if (result && result.success) {
           //获取访问token
           accessStore.getAccessToken();
           const validString = (x: string) => x && x.length > 0;
-          console.log("有效性测试：", validString(accessStore.token));
-          console.log("有效性测试：", accessStore.token);
-          console.log("有效性测试：", accessStore.token.length > 0);
+          console.log("访问token测试1", accessStore.token);
           if (!validString(accessStore.token)) {
             // 生成访问 token
             // putAccessToken(username, password);
