@@ -49,7 +49,7 @@ export const useAccessStore = create<AccessControlStore>()(
         set(() => ({ accessCode: code }));
       },
       updateToken(token: string) {
-        set(() => ({ token }));
+        set(() => ({ token: token }));
       },
       updateOpenAiUrl(url: string) {
         set(() => ({ openaiUrl: url }));

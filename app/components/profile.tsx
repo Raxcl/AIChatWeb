@@ -53,26 +53,29 @@ export function Profile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const { fetchProfile } = profileStore;
-  // useEffect(() => {
-  //   setLoading(true);
-  //   fetchProfile(authStore.token)
-  //     .then((res) => {
-  //       if (!res?.data || !res?.data?.id) {
-  //         authStore.logout();
-  //         navigate(Path.Login);
-  //       }
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // }, [fetchProfile, authStore, navigate]);
+  const { fetchProfile } = profileStore;
+  useEffect(() => {
+    setLoading(true);
+    fetchProfile(authStore.token)
+      .then((res) => {
+        if (!res?.data || !res?.data?.id) {
+          authStore.logout();
+          navigate(Path.Login);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [fetchProfile, authStore, navigate]);
 
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   function logout() {
     setTimeout(() => {
       authStore.logout();
+      console.log("访问token测试111", accessStore.token);
+      accessStore.updateToken("");
+      console.log("访问token测试112", accessStore.token);
       navigate(Path.Login);
     }, 500);
   }
