@@ -121,11 +121,12 @@ export const useAccessStore = create<AccessControlStore>()(
           .then((response) => response.json())
           .then((data) => {
             let queryToken = data.data;
-            console.log("令牌token数据，", data.data);
-            queryToken = queryToken[queryToken.length - 1].key;
-            set(() => ({
-              token: queryToken,
-            }));
+            if (queryToken.length !== 0) {
+              queryToken = queryToken[queryToken.length - 1].key;
+              set(() => ({
+                token: queryToken,
+              }));
+            }
             console.log("设置后的令牌token数据，", get().token);
           });
       },
