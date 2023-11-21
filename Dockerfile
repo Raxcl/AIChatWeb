@@ -16,7 +16,7 @@ COPY ./.next/standalone ./
 COPY ./.next/static ./.next/static
 COPY ./.next/server ./.next/server
 
-ENV BASE_URL=http://20.255.62.150:29000
+ENV BASE_URL=http://103.143.248.111:29000
 
 # ENV BASE_URL=http://aichat-admin:8080
 
