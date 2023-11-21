@@ -85,8 +85,8 @@ export const useWebsiteConfigStore = create<WebsiteConfigStore>()(
 
       fetchWebsiteConfig() {
         const website = {
-          title: "KQ-AI",
-          mainTitle: "KQ-AI",
+          title: "CoCo-AI",
+          mainTitle: "CoCo-AI",
           subTitle: "智能化问答助手",
           loginPageSubTitle: "登录后可与AI交流",
           registerPageSubTitle: "注册后赠送免费额度哦",
