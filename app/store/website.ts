@@ -104,9 +104,13 @@ export const useWebsiteConfigStore = create<WebsiteConfigStore>()(
               contentType: "Text",
             },
             {
-              name: "claude-2",
+              name: "gpt-4",
               contentType: "Text",
             },
+            // {
+            //   name: "claude-2",
+            //   contentType: "Text",
+            // },
             // {
             //   name: "gpt-3.5-turbo-instruct",
             //   contentType: "Text",
