@@ -165,9 +165,9 @@ const en: LocaleType = {
     Title: "登录",
     SubTitle: "登录后可跟AI交流",
     Username: {
-      Title: "用户名或邮箱",
+      Title: "用户名",
       SubTitle: "",
-      Placeholder: "请输入用户名或邮箱",
+      Placeholder: "请输入用户名",
     },
     Password: {
       Title: "密码",
@@ -182,7 +182,7 @@ const en: LocaleType = {
     Toast: {
       Success: "登录成功",
       Logining: "登录中……",
-      EmptyUserName: "用户名或邮箱不能为空",
+      EmptyUserName: "用户名不能为空",
       EmptyPassword: "密码不能为空！",
     },
     GoToRegister: "前往注册",

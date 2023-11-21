@@ -99,14 +99,14 @@ export function Register() {
       return;
     }
     // 邮箱注册 todo 暂时取消邮箱认证
-    // if (email === null || email == "") {
-    //   showToast(Locale.RegisterPage.Toast.EmailIsEmpty);
-    //   return;
-    // }
-    // if (emailCode === null || emailCode === "") {
-    //   showToast(Locale.RegisterPage.Toast.EmailCodeEmpty);
-    //   return;
-    // }
+    if (email === null || email == "") {
+      showToast(Locale.RegisterPage.Toast.EmailIsEmpty);
+      return;
+    }
+    if (emailCode === null || emailCode === "") {
+      showToast(Locale.RegisterPage.Toast.EmailCodeEmpty);
+      return;
+    }
     setLoadingUsage(true);
     showToast(Locale.RegisterPage.Toast.Registering);
     authStore
@@ -119,7 +119,7 @@ export function Register() {
         affCode,
       )
       .then((result) => {
-        -console.log("result", !result);
+        console.log("result", !result);
         // console.log("resul详情为：", result);
         if (!result) {
           // console.log("我不会进来的")
@@ -179,7 +179,7 @@ export function Register() {
             />
           </ListItem> */}
           {/* todo 暂时取消邮箱认证 */}
-          {/* <>
+          <>
             <ListItem
               title={Locale.RegisterPage.Email.Title}
               subTitle={Locale.RegisterPage.Email.SubTitle}
@@ -219,7 +219,7 @@ export function Register() {
                 }}
               />
             </ListItem>
-          </> */}
+          </>
 
           <ListItem
             title={Locale.RegisterPage.Username.Title}
