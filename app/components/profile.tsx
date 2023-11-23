@@ -202,8 +202,8 @@ export function Profile() {
             <></>
           )} */}
           <ListItem
-            title={Locale.Profile.Score.Title}
-            subTitle={Locale.Profile.Score.SubTitle}
+            title={Locale.Profile.Score.SubTitle}
+            // subTitle={Locale.Profile.Score.SubTitle}
           >
             <span>
               {profileStore.tokens == -1 ? "无限制" : profileStore.tokens}
