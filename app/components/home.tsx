@@ -274,8 +274,8 @@ function Screen() {
         const notice = res.data;
         setNoticeTitle("我是主页标题");
         setNoticeContent(notice.data);
-        // todo 暂时关闭公告
-        // setNoticeShow(true);
+        // todo 注释下方暂时关闭公告
+        setNoticeShow(true);
       })
       .catch(() => {
         console.error(
