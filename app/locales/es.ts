@@ -133,6 +133,7 @@ const es: PartialLocaleType = {
       FailedWithReason: "注册失败！原因：",
       PasswordNotTheSame: "两次输入的密码不一致！",
       PasswordEmpty: "密码不能为空！",
+      PasswordLength: "密码长度不得小于 8 位！",
       SendEmailCode: "发送验证码",
       EmailCodeSending: "验证码发送中",
       EmailCodeSent: "验证码已发送，请查看邮箱",

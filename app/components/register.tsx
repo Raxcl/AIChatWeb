@@ -90,6 +90,10 @@ export function Register() {
       showToast(Locale.RegisterPage.Toast.PasswordEmpty);
       return;
     }
+    if (password.length < 8) {
+      showToast("密码长度不得小于 8 位！");
+      return;
+    }
     if (
       comfirmedPassword == null ||
       comfirmedPassword.length == 0 ||
