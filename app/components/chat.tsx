@@ -895,19 +895,12 @@ export function Chat() {
   // }
 
   useEffect(() => {
-    console.log("登录测试3.1");
-
     if (
       context.length === 0 &&
       session.messages.at(0)?.content !== BOT_HELLO.content
     ) {
       const copiedHello = Object.assign({}, BOT_HELLO);
       if (!authStore.token) {
-        console.log("登录测试3.2", authStore.token);
-        console.log("登录测试3.2", authStore.token);
-        console.log("登录测试3.2", authStore.token);
-        console.log("登录测试3.2", authStore.token);
-
         navigate(Path.Login);
         copiedHello.content = Locale.Error.Unauthorized;
       }
