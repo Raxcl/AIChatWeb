@@ -259,7 +259,9 @@ function Screen() {
 
   const [noticeShow, setNoticeShow] = useState(false);
   const [noticeTitle, setNoticeTitle] = useState("");
-  const [noticeContent, setNoticeContent] = useState("");
+  const [noticeContent, setNoticeContent] = useState<NoticeConfigData | string>(
+    "",
+  );
   useEffect(() => {
     const url = "/notice";
     const BASE_URL = process.env.BASE_URL;
@@ -271,11 +273,11 @@ function Screen() {
       .then((res) => res.json())
       .then((res: NoticeConfigResponse) => {
         console.log("[GlobalConfig] got notice config from server", res);
-        const notice = res.data;
         setNoticeTitle(
           "\uD83D\uDCE2\uD83D\uDCE2\uD83D\uDCE2【公告】\uD83D\uDEA8\uD83D\uDEA8\uD83D\uDEA8",
         );
-        setNoticeContent(notice.data);
+        setNoticeContent(res.data);
+        console.log("notice.data值为：", res.data);
         // todo 注释下方暂时关闭公告
         setNoticeShow(true);
       })
