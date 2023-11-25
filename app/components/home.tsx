@@ -272,7 +272,9 @@ function Screen() {
       .then((res: NoticeConfigResponse) => {
         console.log("[GlobalConfig] got notice config from server", res);
         const notice = res.data;
-        setNoticeTitle("我是主页标题");
+        setNoticeTitle(
+          "\uD83D\uDCE2\uD83D\uDCE2\uD83D\uDCE2【公告】\uD83D\uDEA8\uD83D\uDEA8\uD83D\uDEA8",
+        );
         setNoticeContent(notice.data);
         // todo 注释下方暂时关闭公告
         setNoticeShow(true);
