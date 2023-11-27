@@ -91,8 +91,9 @@ export const useWebsiteConfigStore = create<WebsiteConfigStore>()(
           loginPageSubTitle: "登录后可与AI交流",
           registerPageSubTitle: "注册后赠送免费额度哦",
           registerTypes: ["OnlyUsername"],
-          pricingPageTitle: "My Pricing Page Title",
-          pricingPageSubTitle: "My Pricing Page Sub Title",
+          pricingPageTitle: "充值中心",
+          pricingPageSubTitle:
+            "免费额度有限，请充值额度，继续让本站为您服务吧~",
           chatPageSubTitle: "",
           sensitiveWordsTip: "My Sensitive Words Tip",
           balanceNotEnough: "My Balance Not Enough Message",
