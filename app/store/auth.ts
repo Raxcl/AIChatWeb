@@ -83,14 +83,11 @@ export const useAuthStore = create<AuthStore>()(
             .then((response) => response.json())
             .then((data) => {
               queryToken = data.data;
-              console.log("queryToken数据，", queryToken);
-              console.log("token数据，", data);
               set(() => ({
                 username: result.data?.username || "",
                 email: result.data?.userEntity?.email || "",
                 token: queryToken,
               }));
-              console.log("token值为：", get().token);
             });
         }
         return result;

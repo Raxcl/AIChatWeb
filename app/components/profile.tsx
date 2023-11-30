@@ -74,9 +74,7 @@ export function Profile() {
   function logout() {
     setTimeout(() => {
       authStore.logout();
-      console.log("访问token测试111", accessStore.token);
       accessStore.updateToken("");
-      console.log("访问token测试112", accessStore.token);
       navigate(Path.Login);
     }, 500);
   }

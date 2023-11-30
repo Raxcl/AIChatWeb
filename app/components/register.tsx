@@ -123,10 +123,7 @@ export function Register() {
         affCode,
       )
       .then((result) => {
-        console.log("result", !result);
-        // console.log("resul详情为：", result);
         if (!result) {
-          // console.log("我不会进来的")
           showToast(Locale.RegisterPage.Toast.Failed);
           return;
         }

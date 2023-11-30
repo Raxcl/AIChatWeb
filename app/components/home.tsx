@@ -235,9 +235,6 @@ function Screen() {
   const location = useLocation();
   const isHome = location.pathname === Path.Home;
   const isAuth = location.pathname === Path.Auth;
-  console.log("isAuth值为：", isAuth);
-  console.log("location.pathname值为：", location.pathname);
-  console.log("Path.Auth值为：", Path.Auth);
   const isMobileScreen = useMobileScreen();
 
   useEffect(() => {

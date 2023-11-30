@@ -127,11 +127,9 @@ export class ChatGPTApi implements LLMApi {
         };
 
         controller.signal.onabort = finish;
-        console.log("测试点1");
         fetchEventSource(chatPath, {
           ...chatPayload,
           async onopen(res) {
-            console.log("测试点2", res);
             clearTimeout(requestTimeoutId);
             const contentType = res.headers.get("content-type");
             console.log(
@@ -491,18 +489,18 @@ export class ChatGPTApi implements LLMApi {
                 botMessage.attr.targetUuid +
                 ")"
               : statusResJson.data.type === "variation"
-              ? "(VARIATION::" +
-                botMessage.attr.targetIndex +
-                "::" +
-                botMessage.attr.targetUuid +
-                ")"
-              : statusResJson.data.type === "zoomOut"
-              ? "(ZOOMOUT::" +
-                botMessage.attr.zoomRatio +
-                "::" +
-                botMessage.attr.targetUuid +
-                ")"
-              : ""),
+                ? "(VARIATION::" +
+                  botMessage.attr.targetIndex +
+                  "::" +
+                  botMessage.attr.targetUuid +
+                  ")"
+                : statusResJson.data.type === "zoomOut"
+                  ? "(ZOOMOUT::" +
+                    botMessage.attr.zoomRatio +
+                    "::" +
+                    botMessage.attr.targetUuid +
+                    ")"
+                  : ""),
           taskId,
         );
         const state = statusResJson?.data?.state;

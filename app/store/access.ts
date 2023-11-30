@@ -101,7 +101,6 @@ export const useAccessStore = create<AccessControlStore>()(
         const mode = process.env.BUILD_MODE;
         const url = "/token/?p=0";
         let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
-        console.log("获取访问token");
 
         // 本地测试需要
         const DEV_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -127,7 +126,6 @@ export const useAccessStore = create<AccessControlStore>()(
                 token: queryToken,
               }));
             }
-            console.log("设置后的令牌token数据，", get().token);
           });
       },
     }),

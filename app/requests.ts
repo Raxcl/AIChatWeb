@@ -35,10 +35,7 @@ export async function request(
     const BASE_URL = process.env.BASE_URL;
     // const mode = "export";
     const mode = process.env.BUILD_MODE;
-    console.log("BASE_URL", BASE_URL);
-    console.log("url", url);
     let requestUrl = (mode === "export" ? BASE_URL : "") + "/api" + url;
-    console.log("请求url：", requestUrl);
     const res = await fetch(requestUrl, {
       method: method,
       headers: {
@@ -48,7 +45,6 @@ export async function request(
       // // @ts-ignore
       // duplex: "half",
     });
-    console.log("res等于", res);
     if (res.status == 200) {
       let json: Response<any>;
       try {

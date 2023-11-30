@@ -43,7 +43,6 @@ export const useProfileStore = create<ProfileStore>()(
           .then((res) => res.json())
           .then((res: ProfileResponse) => {
             console.log("[Profile] got profile from server", res);
-            console.log("检查个人信息数据", res.data);
             const data = res.data;
             if (res.data) {
               set(() => ({

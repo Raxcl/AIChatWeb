@@ -13,7 +13,6 @@ export async function requestOpenai(req: NextRequest) {
     "/api/",
     "",
   );
-  console.log("进来了吗", openaiPath);
 
   let baseUrl = BASE_URL;
 
@@ -28,9 +27,12 @@ export async function requestOpenai(req: NextRequest) {
   //   console.log("[Org ID]", process.env.OPENAI_ORG_ID);
   // }
 
-  const timeoutId = setTimeout(() => {
-    controller.abort();
-  }, 10 * 60 * 1000);
+  const timeoutId = setTimeout(
+    () => {
+      controller.abort();
+    },
+    10 * 60 * 1000,
+  );
 
   const fetchUrl = `${baseUrl}/${openaiPath}`;
   const fetchOptions: RequestInit = {
@@ -81,16 +83,15 @@ export async function request(req: NextRequest) {
     "/api/",
     "api/",
   );
-  console.log("替换方法", uri);
-  console.log("路径名", `${req.nextUrl.pathname}`);
-  console.log("搜索", `${req.nextUrl.search}`);
 
-  const timeoutId = setTimeout(() => {
-    controller.abort();
-  }, 10 * 60 * 1000);
+  const timeoutId = setTimeout(
+    () => {
+      controller.abort();
+    },
+    10 * 60 * 1000,
+  );
 
   try {
-    console.log("替换方法1", uri);
     console.log(`url = ${baseUrl}/${uri}`);
     const res = await fetch(`${baseUrl}/${uri}`, {
       headers: {
