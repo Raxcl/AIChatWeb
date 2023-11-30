@@ -25,17 +25,17 @@
 //   </>;
 // }
 
-// export function renderNumber(num) {
-//   if (num >= 1000000000) {
-//     return (num / 1000000000).toFixed(1) + 'B';
-//   } else if (num >= 1000000) {
-//     return (num / 1000000).toFixed(1) + 'M';
-//   } else if (num >= 10000) {
-//     return (num / 1000).toFixed(1) + 'k';
-//   } else {
-//     return num;
-//   }
-// }
+export function renderNumber(num) {
+  if (num >= 1000000000) {
+    return (num / 1000000000).toFixed(2) + "B";
+  } else if (num >= 1000000) {
+    return (num / 1000000).toFixed(2) + "M";
+  } else if (num >= 10000) {
+    return (num / 1000).toFixed(2) + "k";
+  } else {
+    return num;
+  }
+}
 
 // export function renderQuota(quota, digits = 2) {
 //   let quotaPerUnit = localStorage.getItem('quota_per_unit');

@@ -21,7 +21,7 @@ import { Path } from "../constant";
 import { ErrorBoundary } from "./error";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "./ui-lib";
-// import { renderQuota } from '../helpers/render';
+import { renderNumber } from "../helpers/render";
 
 interface Package {
   id: number;
@@ -284,7 +284,7 @@ export function Pricing() {
               />
             </ListItem>
 
-            <DangerousListItem title={"剩余额度"}>
+            <DangerousListItem title={"剩余积分"}>
               <div style={{ minWidth: "100px" }}>
                 <div
                   style={{
@@ -293,8 +293,8 @@ export function Pricing() {
                     textAlign: "center",
                   }}
                 >
-                  {/* {renderQuota(userQuota)} */}
-                  {userQuota}
+                  {renderNumber(userQuota)}
+                  {/* {userQuota} */}
                 </div>
               </div>
             </DangerousListItem>

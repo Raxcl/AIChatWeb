@@ -22,6 +22,7 @@ import { showToast, Popover, SingleInput } from "./ui-lib";
 import { Avatar, AvatarPicker } from "./emoji";
 import { copyToClipboard } from "../utils";
 import { Balance } from "../api/users/[...path]/route";
+import { renderNumber } from "../helpers/render";
 
 export function Profile() {
   const navigate = useNavigate();
@@ -115,12 +116,12 @@ export function Profile() {
     return balance.calcType == "Total"
       ? "总额"
       : balance.calcType == "Daily"
-      ? Locale.Profile.BalanceItem.CalcTypes.Daily
-      : balance.calcType == "Hourly"
-      ? Locale.Profile.BalanceItem.CalcTypes.Hourly
-      : balance.calcType == "ThreeHourly"
-      ? Locale.Profile.BalanceItem.CalcTypes.ThreeHourly
-      : "";
+        ? Locale.Profile.BalanceItem.CalcTypes.Daily
+        : balance.calcType == "Hourly"
+          ? Locale.Profile.BalanceItem.CalcTypes.Hourly
+          : balance.calcType == "ThreeHourly"
+            ? Locale.Profile.BalanceItem.CalcTypes.ThreeHourly
+            : "";
   }
 
   return (
@@ -206,7 +207,9 @@ export function Profile() {
             // subTitle={Locale.Profile.Score.SubTitle}
           >
             <span>
-              {profileStore.tokens == -1 ? "无限制" : profileStore.tokens}
+              {profileStore.tokens == -1
+                ? "无限制"
+                : renderNumber(profileStore.tokens)}
             </span>
           </ListItem>
 
