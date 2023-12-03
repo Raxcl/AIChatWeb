@@ -83,6 +83,51 @@ export const useWebsiteConfigStore = create<WebsiteConfigStore>()(
       defaultSystemTemplate: "",
       plugins: [] as AiPlugin[],
 
+      // todo 暂停
+      async fetchWebsiteConfig() {
+        const url = "/globalConfig/website";
+        const BASE_URL = process.env.BASE_URL;
+        const mode = process.env.BUILD_MODE;
+        console.log("mode", mode);
+        let requestUrl = mode === "export" ? BASE_URL + url : "/api" + url;
+        return fetch(requestUrl, {
+          method: "get",
+        })
+          .then((res) => res.json())
+          .then((res: WebsiteConfigResponse) => {
+            console.log("[GlobalConfig] got website config from server", res);
+            const website = res.data.websiteContent;
+            set(() => ({
+              title: website.title,
+              mainTitle: website.mainTitle,
+              subTitle: website.subTitle,
+              loginPageSubTitle: website.loginPageSubTitle,
+              registerPageSubTitle: website.registerPageSubTitle,
+              registerTypes:
+                website.registerTypes && website.registerTypes.length
+                  ? website.registerTypes
+                  : (["OnlyUsername"] as string[]),
+              pricingPageTitle: website.pricingPageTitle,
+              pricingPageSubTitle: website.pricingPageSubTitle,
+              chatPageSubTitle: website.chatPageSubTitle,
+              sensitiveWordsTip: website.sensitiveWordsTip,
+              balanceNotEnough: website.balanceNotEnough,
+              hideGithubIcon: website.hideGithubIcon,
+              botHello: website.botHello,
+              availableModels: website.availableModels,
+              defaultSystemTemplate: website.defaultSystemTemplate,
+              plugins: website.plugins,
+            }));
+            return res;
+          })
+          .catch(() => {
+            console.error("[GlobalConfig] failed to fetch config");
+          })
+          .finally(() => {
+            // fetchState = 2;
+          });
+      },
+
       fetchWebsiteConfig() {
         const website = {
           title: "CoCo-AI",
@@ -108,67 +153,6 @@ export const useWebsiteConfigStore = create<WebsiteConfigStore>()(
               name: "gpt-4",
               contentType: "Text",
             },
-            // {
-            //   name: "claude-2",
-            //   contentType: "Text",
-            // },
-            // {
-            //   name: "gpt-3.5-turbo-instruct",
-            //   contentType: "Text",
-            // },
-            // {
-            //   name: "sage",
-            //   contentType: "Text",
-            // },
-            // {
-            //   name: "claude-instant",
-            //   contentType: "Text",
-            // },
-            // {
-            //   name: "claude-100k",
-            //   contentType: "Text",
-            // },
-
-            // {
-            //   name: "google-palm",
-            //   contentType: "Text",
-            // },
-            // {
-            //   name: "llama-2-70b",
-            //   contentType: "Text",
-            // },
-            // {
-            //   name: "llama-2-13b",
-            //   contentType: "Text",
-            // },
-            // {
-            //   name: "llama-2-7b",
-            //   contentType: "Text",
-            // },
-            // {
-            //   name: "code-llama-34b",
-            //   contentType: "Text",
-            // },
-            // {
-            //   name: "code-llama-13b",
-            //   contentType: "Text",
-            // },
-            // {
-            //   name: "code-llama-7b",
-            //   contentType: "Text",
-            // },
-            // {
-            //   name: "stable-diffusion",
-            //   contentType: "Text",
-            // },
-            // {
-            //   name: "solar-0-70b",
-            //   contentType: "Text",
-            // },
-            // {
-            //   name: "fw-mistral-7b",
-            //   contentType: "Text",
-            // },
           ] as SimpleModel[],
           defaultSystemTemplate: "My Default System Template",
           plugins: [] as AiPlugin[],
