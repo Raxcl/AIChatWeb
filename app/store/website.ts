@@ -173,7 +173,6 @@ export const useWebsiteConfigStore = create<WebsiteConfigStore>()(
           defaultSystemTemplate: "My Default System Template",
           plugins: [] as AiPlugin[],
         };
-
         set(() => ({
           title: website.title,
           mainTitle: website.mainTitle,

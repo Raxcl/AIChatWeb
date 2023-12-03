@@ -527,7 +527,7 @@ export const useChatStore = create<ChatStore>()(
 
         // concat all messages
         const recentMessages = [
-          ...systemPrompts,
+          // ...systemPrompts,
           ...longTermMemoryPrompts,
           ...contextPrompts,
           ...reversedRecentMessages.reverse(),
