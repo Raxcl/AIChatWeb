@@ -893,19 +893,32 @@ export function Chat() {
   //   context.push(copiedHello);
   // }
 
-  useEffect(() => {
-    if (
-      context.length === 0 &&
-      session.messages.at(0)?.content !== BOT_HELLO.content
-    ) {
-      const copiedHello = Object.assign({}, BOT_HELLO);
-      if (!authStore.token) {
-        navigate(Path.Login);
-        copiedHello.content = Locale.Error.Unauthorized;
-      }
-      context.push(copiedHello);
+  if (
+    context.length === 0 &&
+    session.messages.at(0)?.content !== BOT_HELLO.content
+  ) {
+    const copiedHello = Object.assign({}, BOT_HELLO);
+    if (!authStore.token) {
+      navigate(Path.Login);
+      copiedHello.content = Locale.Error.Unauthorized;
     }
-  }, [context, session.messages, authStore.token]); // 你可以根据实际情况确定依赖项
+    context.push(copiedHello);
+  }
+
+  // todo 使用下面的方法会导致欢迎语无法显示，改为上面的
+  // useEffect(() => {
+  //   if (
+  //     context.length === 0 &&
+  //     session.messages.at(0)?.content !== BOT_HELLO.content
+  //   ) {
+  //     const copiedHello = Object.assign({}, BOT_HELLO);
+  //     if (!authStore.token) {
+  //       navigate(Path.Login);
+  //       copiedHello.content = Locale.Error.Unauthorized;
+  //     }
+  //     context.push(copiedHello);
+  //   }
+  // }, [context, session.messages, authStore.token]);
 
   // clear context index = context length + index in messages
   const clearContextIndex =
