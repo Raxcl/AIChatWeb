@@ -85,7 +85,7 @@ export const useWebsiteConfigStore = create<WebsiteConfigStore>()(
 
       // todo 暂停
       async fetchWebsiteConfig() {
-        const url = "/globalConfig/website";
+        const url = "/about";
         const BASE_URL = process.env.BASE_URL;
         const mode = process.env.BUILD_MODE;
         console.log("mode", mode);
@@ -94,9 +94,36 @@ export const useWebsiteConfigStore = create<WebsiteConfigStore>()(
           method: "get",
         })
           .then((res) => res.json())
-          .then((res: WebsiteConfigResponse) => {
-            console.log("[GlobalConfig] got website config from server", res);
-            const website = res.data.websiteContent;
+          .then((res) => {
+            const website = {
+              title: "CoCo-AI",
+              mainTitle: "CoCo-AI",
+              subTitle: "智能化问答助手",
+              loginPageSubTitle: "登录后可与AI交流",
+              registerPageSubTitle: "注册后赠送免费额度哦",
+              registerTypes: ["OnlyUsername"],
+              pricingPageTitle: "充值中心",
+              pricingPageSubTitle:
+                "免费额度有限，请充值额度，继续让本站为您服务吧~",
+              chatPageSubTitle: "",
+              sensitiveWordsTip: "My Sensitive Words Tip",
+              balanceNotEnough: "My Balance Not Enough Message",
+              hideGithubIcon: true,
+              botHello: "Hello, I'm Bot",
+              availableModels: [
+                {
+                  name: "gpt-3.5-turbo",
+                  contentType: "Text",
+                },
+                {
+                  name: "gpt-4",
+                  contentType: "Text",
+                },
+              ] as SimpleModel[],
+              defaultSystemTemplate: "My Default System Template",
+              plugins: [] as AiPlugin[],
+            };
+            website.botHello = res.data;
             set(() => ({
               title: website.title,
               mainTitle: website.mainTitle,
@@ -118,7 +145,8 @@ export const useWebsiteConfigStore = create<WebsiteConfigStore>()(
               defaultSystemTemplate: website.defaultSystemTemplate,
               plugins: website.plugins,
             }));
-            return res;
+            // return res;
+            return Promise.resolve(website);
           })
           .catch(() => {
             console.error("[GlobalConfig] failed to fetch config");
@@ -128,55 +156,55 @@ export const useWebsiteConfigStore = create<WebsiteConfigStore>()(
           });
       },
 
-      fetchWebsiteConfig() {
-        const website = {
-          title: "CoCo-AI",
-          mainTitle: "CoCo-AI",
-          subTitle: "智能化问答助手",
-          loginPageSubTitle: "登录后可与AI交流",
-          registerPageSubTitle: "注册后赠送免费额度哦",
-          registerTypes: ["OnlyUsername"],
-          pricingPageTitle: "充值中心",
-          pricingPageSubTitle:
-            "免费额度有限，请充值额度，继续让本站为您服务吧~",
-          chatPageSubTitle: "",
-          sensitiveWordsTip: "My Sensitive Words Tip",
-          balanceNotEnough: "My Balance Not Enough Message",
-          hideGithubIcon: true,
-          botHello: "Hello, I'm Bot",
-          availableModels: [
-            {
-              name: "gpt-3.5-turbo",
-              contentType: "Text",
-            },
-            {
-              name: "gpt-4",
-              contentType: "Text",
-            },
-          ] as SimpleModel[],
-          defaultSystemTemplate: "My Default System Template",
-          plugins: [] as AiPlugin[],
-        };
-        set(() => ({
-          title: website.title,
-          mainTitle: website.mainTitle,
-          subTitle: website.subTitle,
-          loginPageSubTitle: website.loginPageSubTitle,
-          registerPageSubTitle: website.registerPageSubTitle,
-          registerTypes: website.registerTypes,
-          pricingPageTitle: website.pricingPageTitle,
-          pricingPageSubTitle: website.pricingPageSubTitle,
-          chatPageSubTitle: website.chatPageSubTitle,
-          sensitiveWordsTip: website.sensitiveWordsTip,
-          balanceNotEnough: website.balanceNotEnough,
-          hideGithubIcon: website.hideGithubIcon,
-          botHello: website.botHello,
-          availableModels: website.availableModels,
-          defaultSystemTemplate: website.defaultSystemTemplate,
-          plugins: website.plugins,
-        }));
-        return Promise.resolve(website);
-      },
+      // fetchWebsiteConfig() {
+      //   const website = {
+      //     title: "CoCo-AI",
+      //     mainTitle: "CoCo-AI",
+      //     subTitle: "智能化问答助手",
+      //     loginPageSubTitle: "登录后可与AI交流",
+      //     registerPageSubTitle: "注册后赠送免费额度哦",
+      //     registerTypes: ["OnlyUsername"],
+      //     pricingPageTitle: "充值中心",
+      //     pricingPageSubTitle:
+      //       "免费额度有限，请充值额度，继续让本站为您服务吧~",
+      //     chatPageSubTitle: "",
+      //     sensitiveWordsTip: "My Sensitive Words Tip",
+      //     balanceNotEnough: "My Balance Not Enough Message",
+      //     hideGithubIcon: true,
+      //     botHello: "Hello, I'm Bot",
+      //     availableModels: [
+      //       {
+      //         name: "gpt-3.5-turbo",
+      //         contentType: "Text",
+      //       },
+      //       {
+      //         name: "gpt-4",
+      //         contentType: "Text",
+      //       },
+      //     ] as SimpleModel[],
+      //     defaultSystemTemplate: "My Default System Template",
+      //     plugins: [] as AiPlugin[],
+      //   };
+      //   set(() => ({
+      //     title: website.title,
+      //     mainTitle: website.mainTitle,
+      //     subTitle: website.subTitle,
+      //     loginPageSubTitle: website.loginPageSubTitle,
+      //     registerPageSubTitle: website.registerPageSubTitle,
+      //     registerTypes: website.registerTypes,
+      //     pricingPageTitle: website.pricingPageTitle,
+      //     pricingPageSubTitle: website.pricingPageSubTitle,
+      //     chatPageSubTitle: website.chatPageSubTitle,
+      //     sensitiveWordsTip: website.sensitiveWordsTip,
+      //     balanceNotEnough: website.balanceNotEnough,
+      //     hideGithubIcon: website.hideGithubIcon,
+      //     botHello: website.botHello,
+      //     availableModels: website.availableModels,
+      //     defaultSystemTemplate: website.defaultSystemTemplate,
+      //     plugins: website.plugins,
+      //   }));
+      //   return Promise.resolve(website);
+      // },
     }),
     {
       name: StoreKey.WebsiteConfig,

@@ -260,7 +260,6 @@ export function Pricing() {
                 onClick={openTopUpLink}
               />
             </ListItem>
-            {/*// todo 暂停*/}
             <ListItem>
               <SingleInput
                 style={{ flex: 0.7 }}
