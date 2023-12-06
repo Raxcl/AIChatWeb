@@ -204,17 +204,17 @@ const cn = {
     },
     Username: {
       Title: "用户名",
-      SubTitle: "用户名只能包含字母、数字、下划线，不可以包含中文",
+      SubTitle: "用户名最长 12 位",
       Placeholder: "请输入用户名",
     },
     Password: {
       Title: "密码",
-      SubTitle: "",
+      SubTitle: "密码最短 8 位，最长 20 位",
       Placeholder: "请输入密码",
     },
     ConfirmedPassword: {
       Title: "确认密码",
-      SubTitle: "",
+      SubTitle: "密码最短 8 位，最长 20 位",
       Placeholder: "请再次输入密码",
     },
     NewPassword: {

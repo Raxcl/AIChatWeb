@@ -86,6 +86,10 @@ export function Register() {
       });
   }
   function register() {
+    if (username == null || password.length == 0 || username.length > 12) {
+      showToast("用户名不得为空，且长度不得大于12位！");
+      return;
+    }
     if (password == null || password.length == 0) {
       showToast(Locale.RegisterPage.Toast.PasswordEmpty);
       return;
