@@ -15,8 +15,8 @@ COPY ./node_modules ./node_modules
 COPY ./.next/standalone ./
 COPY ./.next/static ./.next/static
 COPY ./.next/server ./.next/server
-
-ENV BASE_URL=http://103.144.3.106:29000
+# 替换到 docker-compose 中使用
+# ENV BASE_URL=http://######:###
 
 # ENV BASE_URL=http://aichat-admin:8080
 
