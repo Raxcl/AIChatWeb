@@ -15,10 +15,8 @@ COPY ./node_modules ./node_modules
 COPY ./.next/standalone ./
 COPY ./.next/static ./.next/static
 COPY ./.next/server ./.next/server
-
-ENV BASE_URL=http://103.143.248.111:29000
-
-# ENV BASE_URL=http://aichat-admin:8080
+# 这里写你的oneapi后端地址
+ENV BASE_URL=http://127.0.0.1:3001
 
 EXPOSE 3000
 
