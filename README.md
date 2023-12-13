@@ -5,6 +5,9 @@
 2. 修复各种bug，项目原作者由于开启了圈钱模式，已经不维护bug了。欢迎体验此二开分支
 3. 接入 chat-next-web，不断迭代各种功能（进行中）
 
+# 在线演示
+[点我进入](https://ai.cocoai.site)
+
 # 本项目部署（oneapi自行部署）
 1. 修改 Dockerfile 的 BASE_URL 为 opeapi的后端地址
 2. 服务器安装nodejs环境
