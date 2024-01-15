@@ -15,6 +15,8 @@ COPY ./node_modules ./node_modules
 COPY ./.next/standalone ./
 COPY ./.next/static ./.next/static
 COPY ./.next/server ./.next/server
+# 这里写你的oneapi后端地址 (两种方式二选一，我用的第二种，所以第一种注释掉了)
+# ENV BASE_URL=http://127.0.0.1:3001
 # 替换到 docker-compose 中使用
 # ENV BASE_URL=http://######:###
 
